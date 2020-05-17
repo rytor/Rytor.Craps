@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Rytor.Craps.Microservices.Engine
+namespace Rytor.Craps.Microservices.Game
 {
     public class Startup
     {

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Rytor.Craps.Microservices.Engine
+namespace Rytor.Craps.Microservices.Game
 {
     public class Program
     {

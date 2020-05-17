@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Rytor.Craps.Microservices.Engine.Controllers
+namespace Rytor.Craps.Microservices.Game.Controllers
 {
     [ApiController]
     [Route("[controller]")]

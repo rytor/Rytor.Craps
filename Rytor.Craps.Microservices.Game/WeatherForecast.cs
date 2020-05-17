@@ -1,6 +1,6 @@
 using System;
 
-namespace Rytor.Craps.Microservices.Engine
+namespace Rytor.Craps.Microservices.Game
 {
     public class WeatherForecast
     {
