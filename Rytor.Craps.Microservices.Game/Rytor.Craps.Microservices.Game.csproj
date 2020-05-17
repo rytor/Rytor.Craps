@@ -4,5 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Rytor.Libraries.Dice" Version="1.0.0" />
+  </ItemGroup>
+
 
 </Project>

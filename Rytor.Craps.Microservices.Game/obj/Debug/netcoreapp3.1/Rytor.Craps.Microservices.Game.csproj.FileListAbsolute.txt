@@ -16,3 +16,5 @@ D:\Projects\Git\rytor\Rytor.Craps\Rytor.Craps.Microservices.Game\obj\Debug\netco
 D:\Projects\Git\rytor\Rytor.Craps\Rytor.Craps.Microservices.Game\obj\Debug\netcoreapp3.1\staticwebassets\Rytor.Craps.Microservices.Game.StaticWebAssets.xml
 D:\Projects\Git\rytor\Rytor.Craps\Rytor.Craps.Microservices.Game\obj\Debug\netcoreapp3.1\Rytor.Craps.Microservices.Game.dll
 D:\Projects\Git\rytor\Rytor.Craps\Rytor.Craps.Microservices.Game\obj\Debug\netcoreapp3.1\Rytor.Craps.Microservices.Game.pdb
+D:\Projects\Git\rytor\Rytor.Craps\Rytor.Craps.Microservices.Game\bin\Debug\netcoreapp3.1\Rytor.Libraries.Dice.dll
+D:\Projects\Git\rytor\Rytor.Craps\Rytor.Craps.Microservices.Game\obj\Debug\netcoreapp3.1\Rytor.Craps.Microservices.Game.csproj.CopyComplete

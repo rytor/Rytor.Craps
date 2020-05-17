@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v3.1": {
       "Rytor.Craps.Microservices.Game/1.0.0": {
         "dependencies": {
+          "Rytor.Libraries.Dice": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "3.1.0.0",
@@ -303,6 +304,17 @@
         },
         "compile": {
           "Rytor.Craps.Microservices.Game.dll": {}
+        }
+      },
+      "Rytor.Libraries.Dice/1.0.0": {
+        "runtime": {
+          "lib/netstandard2.0/Rytor.Libraries.Dice.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Rytor.Libraries.Dice.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
@@ -1950,6 +1962,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Rytor.Libraries.Dice/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iFGL8n9qjuq7mU1fMVo0IdEbUAvuHVyLYdHp7P5xVY1VlAEkvdr405aE1y72sZ8Dd04cu8YHS0TwaSZR8hyBwQ==",
+      "path": "rytor.libraries.dice/1.0.0",
+      "hashPath": "rytor.libraries.dice.1.0.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
       "type": "referenceassembly",

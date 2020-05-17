@@ -20,6 +20,7 @@
           "netcoreapp3.1"
         ],
         "sources": {
+          "D:\\Projects\\NuGet_Local": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -35,6 +36,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Rytor.Libraries.Dice": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

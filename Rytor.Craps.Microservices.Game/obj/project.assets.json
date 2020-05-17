@@ -1,11 +1,35 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {}
+    ".NETCoreApp,Version=v3.1": {
+      "Rytor.Libraries.Dice/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Rytor.Libraries.Dice.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Rytor.Libraries.Dice.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Rytor.Libraries.Dice/1.0.0": {
+      "sha512": "iFGL8n9qjuq7mU1fMVo0IdEbUAvuHVyLYdHp7P5xVY1VlAEkvdr405aE1y72sZ8Dd04cu8YHS0TwaSZR8hyBwQ==",
+      "type": "package",
+      "path": "rytor.libraries.dice/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        "lib/netstandard2.0/Rytor.Libraries.Dice.dll",
+        "rytor.libraries.dice.1.0.0.nupkg.sha512",
+        "rytor.libraries.dice.nuspec"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": []
+    ".NETCoreApp,Version=v3.1": [
+      "Rytor.Libraries.Dice >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Ryan Torello\\.nuget\\packages\\": {}
@@ -26,6 +50,7 @@
         "netcoreapp3.1"
       ],
       "sources": {
+        "D:\\Projects\\NuGet_Local": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -41,6 +66,12 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "dependencies": {
+          "Rytor.Libraries.Dice": {
+            "target": "Package",
+            "version": "[1.0.0, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
