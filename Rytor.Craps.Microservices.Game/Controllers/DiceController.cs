@@ -11,11 +11,11 @@ namespace Rytor.Craps.Microservices.Game.Controllers
     public class DiceController : ControllerBase
     {
         [HttpGet]
-        public string Get()
+        public int Get()
         {
             var dice = new Dice(2, 6);
             var result = dice.Roll();
-            return result[0].Value + "," + result[1].Value;
+            return result.Total;
         }
     }
 }
