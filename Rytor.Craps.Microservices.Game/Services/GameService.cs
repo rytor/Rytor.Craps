@@ -3,8 +3,10 @@ using Rytor.Libraries.Dice;
 
 namespace Rytor.Craps.Microservices.Game.Services
 {
+    // Service which handles game progress and reporting of specific game events.
     public class GameService : IGameService
     {
+        // Primary function which occurs after a roll has taken place - updates any events triggered by game state and specific roll
         public Models.Game HandleRoll(RollResult roll, Models.Game game)
         {
             game.NumberOfRolls++;
@@ -55,12 +57,13 @@ namespace Rytor.Craps.Microservices.Game.Services
                     break;
             }
 
-            //Single Line Bets
+            // Single Line Bets
 
-            //Moving into different variables solely for easier typing
+            // Moving into different variables solely for easier typing
             int d1 = roll.Dice[0].Value;
             int d2 = roll.Dice[1].Value;
 
+            // Hardway bets
             if (d1 == 1 && d2 == 1)
             {
                 game.LastGameEvents.Add(GameEvent.Two);
@@ -95,14 +98,17 @@ namespace Rytor.Craps.Microservices.Game.Services
                 game.LastGameEvents.Add(GameEvent.Twelve);
             }
 
+            // Field bet
             if (IsRollInField(roll.Total))
             {
                 game.LastGameEvents.Add(GameEvent.Field);
             }
+            // Crap Out bet
             if (IsRollCraps(roll.Total))
             {
                 game.LastGameEvents.Add(GameEvent.C);
             }
+            // Single-Roll Seven bet
             if (roll.Total == 7)
             {
                 game.LastGameEvents.Add(GameEvent.Seven);
@@ -111,11 +117,46 @@ namespace Rytor.Craps.Microservices.Game.Services
             return game;
         }
 
-        public Models.Game ResetGame()
+        // Function to set game object to clean slate following game completion
+        private Models.Game ResetGame()
         {
             return new Models.Game();
         }
 
+        // Function to advance game progress, depending on situation
+        public Models.Game AdvanceGameState(Models.Game game)
+        {
+            // If game completed (ie. opening roll hits 2/3/7/11/12, point is hit, seven is hit after opening roll) start all over
+            if (game.Completed)
+            {
+                return ResetGame();
+            }
+            else
+            {
+                switch (game.State)
+                {
+                    // After bet period, start with opening roll
+                    case GameState.OpeningRollBets:
+                        game.State = GameState.OpeningRoll;
+                        break;
+                    // After opening roll completed, start subsequent roll bet period
+                    case GameState.OpeningRoll:
+                        game.State = GameState.SubsequentRollBets;
+                        break;
+                    // After bet period, start subsequent roll
+                    case GameState.SubsequentRollBets:
+                        game.State = GameState.SubsequentRoll;
+                        break;
+                    // If on subsequent roll, and game not completed, stay there until game completion
+                    default:
+                        break;
+                }
+            }
+
+            return game;
+        }
+
+        // Helper function to determine if opening roll can move to subsequent roll, because total rolled can be a point
         private bool CanRollBePoint(int rollValue)
         {
             if (rollValue == 4 || rollValue == 5 || rollValue == 6 || rollValue == 8 || rollValue == 9 || rollValue == 10)
@@ -124,6 +165,7 @@ namespace Rytor.Craps.Microservices.Game.Services
                 return false;
         }
 
+        // Helper function to determine if field bet has been hit on current roll
         private bool IsRollInField(int rollValue)
         {
             if (rollValue == 2 || rollValue == 3 || rollValue == 4 ||  rollValue == 9 || rollValue == 10 || rollValue == 11 || rollValue == 12)
@@ -132,6 +174,7 @@ namespace Rytor.Craps.Microservices.Game.Services
                 return false;
         }
 
+        // Helper function to determine if craps has been hit on current roll
         private bool IsRollCraps(int rollValue)
         {
             if (rollValue == 2 || rollValue == 3 || rollValue == 12)
@@ -140,6 +183,7 @@ namespace Rytor.Craps.Microservices.Game.Services
                 return false;
         }
 
+        // Helper function to determine if opening roll has resulted in a pass line win
         private bool IsRollOpeningPassWin(int rollValue)
         {
             if (rollValue == 7 || rollValue == 11)

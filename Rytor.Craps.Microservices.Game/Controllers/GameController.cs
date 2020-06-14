@@ -23,13 +23,5 @@ namespace Rytor.Craps.Microservices.Game.Controllers
         {
             return Ok(_game);
         }
-
-        [HttpPut]
-        public ActionResult<Models.Game> Put(Models.Game game)
-        {
-            //TO-DO: Add validation on object
-            _game = game;
-            return Ok(_game);
-        }
     }
 }

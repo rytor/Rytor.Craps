@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rytor.Craps.Microservices.Game", "Rytor.Craps.Microservices.Game\Rytor.Craps.Microservices.Game.csproj", "{9D1DBBA6-0AC1-4EA7-87A9-7FF7CB56EB07}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rytor.Craps.Microservices.Game.Tests", "Rytor.Craps.Microservices.Game.Tests", "{BD53782C-D6CD-4D89-8877-F63E76B58145}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rytor.Craps.Microservices.Game.Tests", "Rytor.Craps.Microservices.Game.Tests\Rytor.Craps.Microservices.Game.Tests.csproj", "{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,20 @@ Global
 		{9D1DBBA6-0AC1-4EA7-87A9-7FF7CB56EB07}.Release|x64.Build.0 = Release|Any CPU
 		{9D1DBBA6-0AC1-4EA7-87A9-7FF7CB56EB07}.Release|x86.ActiveCfg = Release|Any CPU
 		{9D1DBBA6-0AC1-4EA7-87A9-7FF7CB56EB07}.Release|x86.Build.0 = Release|Any CPU
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}.Debug|x64.Build.0 = Debug|Any CPU
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}.Debug|x86.Build.0 = Debug|Any CPU
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}.Release|x64.ActiveCfg = Release|Any CPU
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}.Release|x64.Build.0 = Release|Any CPU
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}.Release|x86.ActiveCfg = Release|Any CPU
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EAD00A05-5841-43C9-9A35-B0E2E3CB405F} = {BD53782C-D6CD-4D89-8877-F63E76B58145}
 	EndGlobalSection
 EndGlobal
