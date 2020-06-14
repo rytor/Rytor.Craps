@@ -19,7 +19,6 @@ namespace Rytor.Craps.Microservices.Game.Services
                     if (CanRollBePoint(roll.Total))
                     {
                         game.Point = roll.Total;
-                        game.State = GameState.SubsequentRoll;
                     }
                     else if (IsRollOpeningPassWin(roll.Total))
                     {
@@ -33,6 +32,7 @@ namespace Rytor.Craps.Microservices.Game.Services
                     }
                     break;
                 case GameState.SubsequentRoll:
+                    // Pass line
                     if (roll.Total == game.Point)
                     {
                         game.LastGameEvents.Add(GameEvent.Pass);
@@ -44,14 +44,42 @@ namespace Rytor.Craps.Microservices.Game.Services
                         game.Completed = true;
                     }
 
+                    // Other non-point rolls
+                    if (roll.Total == 4 && 4 != game.Point)
+                    {
+                        game.LastGameEvents.Add(GameEvent.Four);
+                    }
+                    else if (roll.Total == 5 && 5 != game.Point)
+                    {
+                        game.LastGameEvents.Add(GameEvent.Five);
+                    }
+                    else if (roll.Total == 6 && 6 != game.Point)
+                    {
+                        game.LastGameEvents.Add(GameEvent.Six);
+                    }
+                    else if (roll.Total == 8 && 8 != game.Point)
+                    {
+                        game.LastGameEvents.Add(GameEvent.Eight);
+                    }
+                    else if (roll.Total == 9 && 9 != game.Point)
+                    {
+                        game.LastGameEvents.Add(GameEvent.Nine);
+                    }
+                    else if (roll.Total == 10 && 10 != game.Point)
+                    {
+                        game.LastGameEvents.Add(GameEvent.Ten);
+                    }
+
+                    // Big six and eight
                     if (roll.Total == 6)
                     {
                         game.LastGameEvents.Add(GameEvent.BigSix);
                     }
-                    else if (roll.Total == 8)
+                    if (roll.Total == 8)
                     {
                         game.LastGameEvents.Add(GameEvent.BigEight);
                     }
+
                     break;
                 default:
                     break;
@@ -74,19 +102,19 @@ namespace Rytor.Craps.Microservices.Game.Services
             }
             else if (d1 == 2 && d2 == 2)
             {
-                game.LastGameEvents.Add(GameEvent.Four);
+                game.LastGameEvents.Add(GameEvent.HardFour);
             }
             else if (d1 == 3 && d2 == 3)
             {
-                game.LastGameEvents.Add(GameEvent.Six);
+                game.LastGameEvents.Add(GameEvent.HardSix);
             }
             else if (d1 == 4 && d2 == 4)
             {
-                game.LastGameEvents.Add(GameEvent.Eight);
+                game.LastGameEvents.Add(GameEvent.HardEight);
             }
             else if (d1 == 5 && d2 == 5)
             {
-                game.LastGameEvents.Add(GameEvent.Ten);
+                game.LastGameEvents.Add(GameEvent.HardTen);
             }
             else if ((d1 == 5 && d2 == 6) || (d1 == 6 && d2 == 5))
             {
@@ -106,6 +134,7 @@ namespace Rytor.Craps.Microservices.Game.Services
             // Crap Out bet
             if (IsRollCraps(roll.Total))
             {
+                game.LastGameEvents.Add(GameEvent.Craps);
                 game.LastGameEvents.Add(GameEvent.C);
             }
             // Single-Roll Seven bet
