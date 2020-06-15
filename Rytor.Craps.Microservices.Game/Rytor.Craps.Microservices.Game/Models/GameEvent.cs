@@ -1,0 +1,31 @@
+namespace Rytor.Craps.Microservices.Game.Models
+{
+    public enum GameEvent
+    {
+        Pass,
+        DontPass,
+        Field,
+        BigSix,
+        BigEight,
+        Come,
+        DontCome,
+        Four,
+        Five,
+        Six,
+        Eight,
+        Nine,
+        Ten,
+        C,
+        E,
+        Seven,
+        Craps,
+        HardFour,
+        HardSix,
+        HardEight,
+        HardTen,
+        Three,
+        Two,
+        Twelve,
+        Eleven
+    }
+}
