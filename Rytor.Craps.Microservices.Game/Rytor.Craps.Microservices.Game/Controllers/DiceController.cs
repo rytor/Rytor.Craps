@@ -10,12 +10,18 @@ namespace Rytor.Craps.Microservices.Game.Controllers
     [Route("[controller]")]
     public class DiceController : ControllerBase
     {
-        [HttpGet]
-        public int Get()
+        Dice _dice;
+
+        public DiceController()
         {
-            var dice = new Dice(2, 6);
-            var result = dice.Roll();
-            return result.Total;
+            _dice = new Dice(2, 6);
+        }
+
+        [HttpGet]
+        [Route("roll")]
+        public int Roll()
+        {
+            return _dice.Roll().Total;
         }
     }
 }
