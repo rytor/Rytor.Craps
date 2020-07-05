@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Rytor.Craps.Microservices.Account.Interfaces;
+using Rytor.Craps.Microservices.Account.Repositories;
 
 namespace Rytor.Craps.Microservices.Account
 {
@@ -25,6 +27,8 @@ namespace Rytor.Craps.Microservices.Account
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IAccountRepository>(x => new AccountRepository(Configuration["Database:ConnectionString"], x.GetService<ILoggerFactory>()));
+
             services.AddControllers();
         }
 
