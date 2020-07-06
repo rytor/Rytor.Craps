@@ -67,5 +67,75 @@ namespace Rytor.Craps.Microservices.Account.Repositories
                 return null;
             }
         }
+
+        public int CreateAccount(Models.Account account)
+        {
+            int newId;
+
+            string sql = $@"INSERT INTO dbo.Account (@twitchId) 
+                            VALUES (@TwitchId)
+                            SELECT CAST(SCOPE_IDENTITY() as int)";
+
+            try
+            {
+                _logger.LogDebug($@"{_className}: Creating Account {account.TwitchId}");
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    newId = connection.Query<int>(sql, new { twitchId = account.TwitchId }).Single();
+                }
+
+                return newId;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($@"{_className}: Error creating Account {account.TwitchId} - {e.Message}");
+                return -1;
+            }
+        }
+
+        public Models.Account UpdateAccount(Models.Account account)
+        {
+            string sql = $@"UPDATE dbo.Account
+                            SET TwitchId = @twitchId
+                            WHERE Id = @id";
+            
+            try
+            {
+                _logger.LogDebug($@"{_className}: Updating Account {account.Id} to {account.TwitchId}");
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Execute(sql, new { id = account.Id, twitchId = account.TwitchId });
+                }
+
+                return GetAccountById(account.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($@"{_className}: Error updating Account {account.Id} - {e.Message}");
+                return null;
+            }
+        }
+
+        public bool DeleteAccount(int id)
+        {
+            string sql = $@"DELETE FROM dbo.Account
+                            WHERE Id = @deleteId";
+            
+            try
+            {
+                _logger.LogDebug($@"{_className}: Deleting Account {id}");
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Execute(sql, new { deleteId = id });
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($@"{_className}: Error deleting Account {id} - {e.Message}");
+                return false;
+            }
+        }
     }
 }

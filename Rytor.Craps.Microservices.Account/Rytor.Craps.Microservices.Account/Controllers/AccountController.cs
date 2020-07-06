@@ -46,5 +46,51 @@ namespace Rytor.Craps.Microservices.Account.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult Post([FromBody] Models.Account account)
+        {
+            var result = _accountRepository.CreateAccount(account);
+            if (result > 0)
+            {
+                return StatusCode(201, result);
+            }
+            else
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult Put([FromBody] Models.Account account)
+        {
+            Models.Account result = _accountRepository.UpdateAccount(account);
+
+            if (result != null)
+            {
+                return Accepted(result);
+            }
+            else
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            bool result = _accountRepository.DeleteAccount(id);
+
+            if (result)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }
