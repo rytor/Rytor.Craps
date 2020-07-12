@@ -1,0 +1,11 @@
+CREATE DATABASE Account;
+
+USE Account;
+
+GO
+
+CREATE TABLE Account (
+    Id int IDENTITY(1,1) PRIMARY KEY,
+    TwitchId VARCHAR(50) NOT NULL,
+    CreateDate DATETIME DEFAULT GETDATE()
+);
