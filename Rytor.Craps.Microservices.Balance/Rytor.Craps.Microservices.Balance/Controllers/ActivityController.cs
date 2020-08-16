@@ -12,23 +12,25 @@ namespace Rytor.Craps.Microservices.Balance.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class BalanceController : ControllerBase
+    public class ActivityController : ControllerBase
     {
-        private readonly ILogger<BalanceController> _logger;
+        private readonly ILogger<ActivityController> _logger;
         private readonly IBalanceRepository _balanceRepository;
+        private readonly IActivityRepository _activityRepository;
 
-        public BalanceController(ILoggerFactory loggerFactory, IBalanceRepository balanceRepository)
+        public ActivityController(ILoggerFactory loggerFactory, IBalanceRepository balanceRepository, IActivityRepository activityRepository)
         {
-            _logger = loggerFactory.CreateLogger<BalanceController>();
+            _logger = loggerFactory.CreateLogger<ActivityController>();
             _logger.LogInformation("BalanceController initialized.");
             _balanceRepository = balanceRepository;
+            _activityRepository = activityRepository;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<Models.Balance>> Get()
+        public ActionResult<IEnumerable<Models.Activity>> Get()
         {
-            return Ok(_balanceRepository.GetBalances());
+            return Ok(_activityRepository.GetActivity());
         }
 
         [HttpGet("{id}")]
@@ -36,7 +38,23 @@ namespace Rytor.Craps.Microservices.Balance.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetById(int id)
         {
-            var result = _balanceRepository.GetBalanceById(id);
+            var result = _activityRepository.GetActivityById(id);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("account/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<IEnumerable<Models.Activity>> GetByAccountId(int id)
+        {
+            var result = _activityRepository.GetActivityByAccountId(id);
             if (result != null)
             {
                 return Ok(result);
@@ -50,9 +68,9 @@ namespace Rytor.Craps.Microservices.Balance.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult Post([FromBody] Models.Balance balance)
+        public IActionResult Post([FromBody] Models.Activity activity)
         {
-            var result = _balanceRepository.CreateBalance(balance);
+            var result = _activityRepository.CreateActivity(activity);
             if (result > 0)
             {
                 return StatusCode(201, result);
@@ -64,9 +82,9 @@ namespace Rytor.Craps.Microservices.Balance.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Models.Balance balance)
+        public IActionResult Put([FromBody] Models.Activity activity)
         {
-            Models.Balance result = _balanceRepository.UpdateBalance(balance);
+            Models.Activity result = _activityRepository.UpdateActivity(activity);
 
             if (result != null)
             {
@@ -81,7 +99,7 @@ namespace Rytor.Craps.Microservices.Balance.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            bool result = _balanceRepository.DeleteBalance(id);
+            bool result = _activityRepository.DeleteActivity(id);
 
             if (result)
             {
