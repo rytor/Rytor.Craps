@@ -110,5 +110,48 @@ namespace Rytor.Craps.Microservices.Balance.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPost("deposit")]
+        public IActionResult Deposit(Models.ActivityRequest request)
+        {
+            // Make sure amount is greater than zero
+            if (request.Amount > 0)
+            {
+                // Update Balance
+                Models.Balance accountBalance = _balanceRepository.GetBalanceById(request.AccountId);
+                accountBalance.CurrentBalance += request.Amount;
+                Models.Balance result = _balanceRepository.UpdateBalance(accountBalance);
+
+                // Add Activity
+                _activityRepository.CreateActivity(new Models.Activity { AccountId = request.AccountId, Amount = request.Amount, ActivityTypeId = Models.ActivityType.Deposit} );
+
+                return Accepted(result);
+            }
+            else
+            {
+                return BadRequest("Amount must be greater than zero.");
+            }
+        }
+
+        [HttpPost("withdraw")]
+        public IActionResult Withdraw(Models.ActivityRequest request)
+        {
+            // Make sure amount is greater than zero
+            if (request.Amount > 0)
+            {
+                // Update Balance
+                Models.Balance accountBalance = _balanceRepository.GetBalanceById(request.AccountId);
+                accountBalance.CurrentBalance -= request.Amount;
+                Models.Balance result = _balanceRepository.UpdateBalance(accountBalance);
+
+                // Add Activity
+                _activityRepository.CreateActivity(new Models.Activity { AccountId = request.AccountId, Amount = request.Amount, ActivityTypeId = Models.ActivityType.Withdrawal} );
+                return Accepted(result);
+            }
+            else
+            {
+                return BadRequest("Amount must be greater than zero.");
+            }
+        }
     }
 }
