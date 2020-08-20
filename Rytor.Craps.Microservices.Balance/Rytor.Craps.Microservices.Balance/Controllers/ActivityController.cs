@@ -141,12 +141,21 @@ namespace Rytor.Craps.Microservices.Balance.Controllers
             {
                 // Update Balance
                 Models.Balance accountBalance = _balanceRepository.GetBalanceById(request.AccountId);
-                accountBalance.CurrentBalance -= request.Amount;
-                Models.Balance result = _balanceRepository.UpdateBalance(accountBalance);
 
-                // Add Activity
-                _activityRepository.CreateActivity(new Models.Activity { AccountId = request.AccountId, Amount = request.Amount, ActivityTypeId = Models.ActivityType.Withdrawal} );
-                return Accepted(result);
+                // Make sure balance can cover withdrawal
+                if (accountBalance.CurrentBalance >= request.Amount)
+                {
+                    accountBalance.CurrentBalance -= request.Amount;
+                    Models.Balance result = _balanceRepository.UpdateBalance(accountBalance);
+
+                    // Add Activity
+                    _activityRepository.CreateActivity(new Models.Activity { AccountId = request.AccountId, Amount = request.Amount, ActivityTypeId = Models.ActivityType.Withdrawal} );
+                    return Accepted(result);
+                }
+                else
+                {
+                    return BadRequest("Not enough funds available to withdraw.");
+                }
             }
             else
             {
