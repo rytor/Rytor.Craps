@@ -24,21 +24,18 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
 
         public int CreateBalance(Models.Balance balance)
         {
-            int newId;
-
             string sql = $@"INSERT INTO dbo.Balance (AccountId, CurrentBalance, CurrentFloor) 
-                            VALUES (@AccountId, @CurrentBalance, @CurrentFloor);
-                            SELECT CAST(SCOPE_IDENTITY() as int);";
+                            VALUES (@AccountId, @CurrentBalance, @CurrentFloor)";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Creating Balance for Account {balance.AccountId}");
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    newId = connection.Query<int>(sql, new { AccountId = balance.AccountId, CurrentBalance = balance.CurrentBalance, CurrentFloor = balance.CurrentFloor }).First();
+                    connection.Query(sql, new { AccountId = balance.AccountId, CurrentBalance = balance.CurrentBalance, CurrentFloor = balance.CurrentFloor });
                 }
 
-                return newId;
+                return 0;
             }
             catch (Exception e)
             {

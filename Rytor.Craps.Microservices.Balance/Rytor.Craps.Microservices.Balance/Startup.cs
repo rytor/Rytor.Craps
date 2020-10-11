@@ -28,6 +28,7 @@ namespace Rytor.Craps.Microservices.Balance
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IBalanceRepository>(x => new BalanceRepository(Configuration["Database:ConnectionString"], x.GetService<ILoggerFactory>()));
+            services.AddSingleton<IActivityRepository>(x => new ActivityRepository(Configuration["Database:ConnectionString"], x.GetService<ILoggerFactory>()));
 
             services.AddControllers();
         }

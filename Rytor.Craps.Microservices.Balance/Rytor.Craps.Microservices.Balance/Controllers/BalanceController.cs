@@ -53,9 +53,9 @@ namespace Rytor.Craps.Microservices.Balance.Controllers
         public IActionResult Post([FromBody] Models.Balance balance)
         {
             var result = _balanceRepository.CreateBalance(balance);
-            if (result > 0)
+            if (result == 0)
             {
-                return StatusCode(201, result);
+                return StatusCode(201);
             }
             else
             {

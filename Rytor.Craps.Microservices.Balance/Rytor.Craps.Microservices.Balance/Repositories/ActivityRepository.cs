@@ -72,7 +72,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             Models.Activity result;
 
-            string sql = $@"Id, AccountId, ActivityTypeId, Amount, CreateDate from dbo.Activity WHERE Id = @Id";
+            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from dbo.Activity WHERE Id = @Id";
 
             try
             {
