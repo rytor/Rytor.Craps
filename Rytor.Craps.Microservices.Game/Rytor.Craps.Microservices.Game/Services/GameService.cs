@@ -147,7 +147,7 @@ namespace Rytor.Craps.Microservices.Game.Services
         }
 
         // Function to set game object to clean slate following game completion
-        private Models.Game ResetGame()
+        public Models.Game ResetGame()
         {
             return new Models.Game();
         }
