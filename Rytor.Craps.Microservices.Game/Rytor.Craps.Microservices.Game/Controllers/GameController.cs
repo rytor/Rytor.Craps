@@ -40,7 +40,7 @@ namespace Rytor.Craps.Microservices.Game.Controllers
         [Route("advance")]
         public ActionResult<Models.Game> AdvanceGame()
         {
-            _game = _gameService.AdvanceGameState(_game);
+            _game = _gameService.AdvanceGameState();
             return Ok(_game);
         }
 
@@ -48,7 +48,7 @@ namespace Rytor.Craps.Microservices.Game.Controllers
         [Route("roll")]
         public ActionResult<Models.Game> HandleRoll([FromBody] RollResult roll)
         {
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
             return Ok(_game);
         }
     }

@@ -24,12 +24,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 6;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(1, 1);
 
             // call HandleRoll with a two
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -48,12 +51,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 6;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(2, 1);
 
             // call HandleRoll with a three
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -72,12 +78,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 4;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(1, 3);
 
             // call HandleRoll with a four
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -95,12 +104,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 4;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(2, 2);
 
             // call HandleRoll with a four
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -118,12 +130,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 5;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(1, 3);
 
             // call HandleRoll with a four
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -141,12 +156,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 5;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(2, 2);
 
             // call HandleRoll with a four
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);            
@@ -164,12 +182,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 5;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(2, 3);
 
             // call HandleRoll with a five
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -185,12 +206,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 8;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(2, 3);
 
             // call HandleRoll with a five
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -206,12 +230,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 6;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(2, 4);
 
             // call HandleRoll with a six
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -229,12 +256,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 6;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(3, 3);
 
             // call HandleRoll with a six
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -252,12 +282,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 4;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(5, 1);
 
             // call HandleRoll with a six
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -275,12 +308,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 10;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(3, 3);
 
             // call HandleRoll with a six
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);            
@@ -298,12 +334,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 5;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(4, 3);
 
             // call HandleRoll with a seven
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -320,12 +359,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 8;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(6, 2);
 
             // call HandleRoll with a eight
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -344,11 +386,14 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game.State = GameState.SubsequentRoll;
             _game.Point = 8;
             
+            // override Game
+            _game = _gameService.OverrideGame(_game);
+            
             // instantiate roll result
             RollResult roll = ForceRollResult(4, 4);
 
             // call HandleRoll with a eight
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -366,12 +411,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 9;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(3, 5);
 
             // call HandleRoll with a eight
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -389,12 +437,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 4;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(4, 4);
 
             // call HandleRoll with a eight
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);            
@@ -412,12 +463,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 9;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(4, 5);
 
             // call HandleRoll with a nine
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -434,12 +488,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 8;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(5, 4);
 
             // call HandleRoll with a nine
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -456,12 +513,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 10;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(4, 6);
 
             // call HandleRoll with a ten
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -479,12 +539,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 10;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(5, 5);
 
             // call HandleRoll with a ten
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -502,12 +565,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 9;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(6, 4);
 
             // call HandleRoll with a ten
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -525,12 +591,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 6;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(5, 5);
 
             // call HandleRoll with a ten
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);            
@@ -548,12 +617,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 10;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(5, 6);
 
             // call HandleRoll with a eleven
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -571,12 +643,15 @@ namespace Rytor.Craps.Microservices.Game.Tests
             _game = new Models.Game();
             _game.State = GameState.SubsequentRoll;
             _game.Point = 9;
+
+            // override Game
+            _game = _gameService.OverrideGame(_game);
             
             // instantiate roll result
             RollResult roll = ForceRollResult(6, 6);
 
             // call HandleRoll with a twelve
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
