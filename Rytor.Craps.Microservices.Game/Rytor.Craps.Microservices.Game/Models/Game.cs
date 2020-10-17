@@ -12,7 +12,7 @@ namespace Rytor.Craps.Microservices.Game.Models
 
         public Game()
         {
-            State = GameState.OpeningRoll;
+            State = GameState.OpeningRollBets;
             NumberOfRolls = 0;
             LastGameEvents = new List<GameEvent>();
             Completed = false;

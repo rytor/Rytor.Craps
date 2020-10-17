@@ -3,81 +3,94 @@ using Rytor.Libraries.Dice;
 
 namespace Rytor.Craps.Microservices.Game.Services
 {
-    // Service which handles game progress and reporting of specific game events.
+    // Service which handles _game progress and reporting of specific game events.
     public class GameService : IGameService
     {
-        // Primary function which occurs after a roll has taken place - updates any events triggered by game state and specific roll
-        public Models.Game HandleRoll(RollResult roll, Models.Game game)
+        private Models.Game _game;
+
+        public GameService()
         {
-            game.NumberOfRolls++;
-            game.LastGameEvents.Clear();
+            _game = ResetGame();
+        }
+
+        // Function to return current game
+        public Models.Game GetGame()
+        {
+            return _game;
+        }
+
+        // Primary function which occurs after a roll has taken place - updates any events triggered by game state and specific roll
+        public Models.Game HandleRoll(RollResult roll)
+        {
+            _game.NumberOfRolls++;
+            _game.LastGameEvents.Clear();
 
             // Line Bets
-            switch (game.State)
+            switch (_game.State)
             {
                 case GameState.OpeningRoll:
                     if (CanRollBePoint(roll.Total))
                     {
-                        game.Point = roll.Total;
+                        _game.Point = roll.Total;
                     }
                     else if (IsRollOpeningPassWin(roll.Total))
                     {
-                        game.LastGameEvents.Add(GameEvent.Pass);
-                        game.Completed = true;
+                        _game.LastGameEvents.Add(GameEvent.Pass);
+                        _game.Completed = true;
                     }
                     else if (IsRollCraps(roll.Total))
                     {
-                        game.LastGameEvents.Add(GameEvent.DontPass);
-                        game.Completed = true;
+                        _game.LastGameEvents.Add(GameEvent.DontPass);
+                        _game.Completed = true;
                     }
                     break;
                 case GameState.SubsequentRoll:
                     // Pass line
-                    if (roll.Total == game.Point)
+                    if (roll.Total == _game.Point)
                     {
-                        game.LastGameEvents.Add(GameEvent.Pass);
-                        game.Completed = true;
+                        _game.LastGameEvents.Add(GameEvent.Pass);
+                        _game.Completed = true;
                     }
                     else if (roll.Total == 7)
                     {
-                        game.LastGameEvents.Add(GameEvent.DontPass);
-                        game.Completed = true;
+                        _game.LastGameEvents.Add(GameEvent.DontPass);
+                        _game.Completed = true;
                     }
 
                     // Other non-point rolls
-                    if (roll.Total == 4 && 4 != game.Point)
+                    if (roll.Total == 4 && 4 != _game.Point)
                     {
-                        game.LastGameEvents.Add(GameEvent.Four);
+                        _game.LastGameEvents.Add(GameEvent.Four);
                     }
-                    else if (roll.Total == 5 && 5 != game.Point)
+                    else if (roll.Total == 5 && 5 != _game.Point)
                     {
-                        game.LastGameEvents.Add(GameEvent.Five);
+                        _game.LastGameEvents.Add(GameEvent.Five);
                     }
-                    else if (roll.Total == 6 && 6 != game.Point)
+                    else if (roll.Total == 6 && 6 != _game.Point)
                     {
-                        game.LastGameEvents.Add(GameEvent.Six);
+                        _game.LastGameEvents.Add(GameEvent.Six);
                     }
-                    else if (roll.Total == 8 && 8 != game.Point)
+                    else if (roll.Total == 8 && 8 != _game.Point)
                     {
-                        game.LastGameEvents.Add(GameEvent.Eight);
+                        _game.LastGameEvents.Add(GameEvent.Eight);
                     }
-                    else if (roll.Total == 9 && 9 != game.Point)
+                    else if (roll.Total == 9 && 9 != _game.Point)
                     {
-                        game.LastGameEvents.Add(GameEvent.Nine);
+                        _game.LastGameEvents.Add(GameEvent.Nine);
                     }
-                    else if (roll.Total == 10 && 10 != game.Point)
+                    else if (roll.Total == 10 && 10 != _game.Point)
                     {
-                        game.LastGameEvents.Add(GameEvent.Ten);
+                        _game.LastGameEvents.Add(GameEvent.Ten);
                     }
 
                     // Big six and eight
                     if (roll.Total == 6)
                     {
-                        game.LastGameEvents.Add(GameEvent.BigSix);
+                        _game.LastGameEvents.Add(GameEvent.BigSix);
                     }
                     if (roll.Total == 8)
                     {
-                        game.LastGameEvents.Add(GameEvent.BigEight);
+                        _game.LastGameEvents.Add(GameEvent.BigEight);
                     }
 
                     break;
@@ -94,95 +107,103 @@ namespace Rytor.Craps.Microservices.Game.Services
             // Hardway bets
             if (d1 == 1 && d2 == 1)
             {
-                game.LastGameEvents.Add(GameEvent.Two);
+                _game.LastGameEvents.Add(GameEvent.Two);
             }
             else if ((d1 == 1 && d2 == 2) || (d1 == 2 && d2 == 1))
             {
-                game.LastGameEvents.Add(GameEvent.Three);
+                _game.LastGameEvents.Add(GameEvent.Three);
             }
             else if (d1 == 2 && d2 == 2)
             {
-                game.LastGameEvents.Add(GameEvent.HardFour);
+                _game.LastGameEvents.Add(GameEvent.HardFour);
             }
             else if (d1 == 3 && d2 == 3)
             {
-                game.LastGameEvents.Add(GameEvent.HardSix);
+                _game.LastGameEvents.Add(GameEvent.HardSix);
             }
             else if (d1 == 4 && d2 == 4)
             {
-                game.LastGameEvents.Add(GameEvent.HardEight);
+                _game.LastGameEvents.Add(GameEvent.HardEight);
             }
             else if (d1 == 5 && d2 == 5)
             {
-                game.LastGameEvents.Add(GameEvent.HardTen);
+                _game.LastGameEvents.Add(GameEvent.HardTen);
             }
             else if ((d1 == 5 && d2 == 6) || (d1 == 6 && d2 == 5))
             {
-                game.LastGameEvents.Add(GameEvent.Eleven);
-                game.LastGameEvents.Add(GameEvent.E);
+                _game.LastGameEvents.Add(GameEvent.Eleven);
+                _game.LastGameEvents.Add(GameEvent.E);
             }
             else if (d1 == 6 && d2 == 6)
             {
-                game.LastGameEvents.Add(GameEvent.Twelve);
+                _game.LastGameEvents.Add(GameEvent.Twelve);
             }
 
             // Field bet
             if (IsRollInField(roll.Total))
             {
-                game.LastGameEvents.Add(GameEvent.Field);
+                _game.LastGameEvents.Add(GameEvent.Field);
             }
             // Crap Out bet
             if (IsRollCraps(roll.Total))
             {
-                game.LastGameEvents.Add(GameEvent.Craps);
-                game.LastGameEvents.Add(GameEvent.C);
+                _game.LastGameEvents.Add(GameEvent.Craps);
+                _game.LastGameEvents.Add(GameEvent.C);
             }
             // Single-Roll Seven bet
             if (roll.Total == 7)
             {
-                game.LastGameEvents.Add(GameEvent.Seven);
+                _game.LastGameEvents.Add(GameEvent.Seven);
             }
 
-            return game;
+            return _game;
         }
 
-        // Function to set game object to clean slate following game completion
-        private Models.Game ResetGame()
+        // Function to set _game object to clean slate following _game completion
+        public Models.Game ResetGame()
         {
-            return new Models.Game();
+            _game = new Models.Game();
+            return _game;
         }
 
-        // Function to advance game progress, depending on situation
-        public Models.Game AdvanceGameState(Models.Game game)
+        // Function to advance _game progress, depending on situation
+        public Models.Game AdvanceGameState()
         {
-            // If game completed (ie. opening roll hits 2/3/7/11/12, point is hit, seven is hit after opening roll) start all over
-            if (game.Completed)
+            // If _game completed (ie. opening roll hits 2/3/7/11/12, point is hit, seven is hit after opening roll) start all over
+            if (_game.Completed)
             {
-                return ResetGame();
+                _game = ResetGame();
             }
             else
             {
-                switch (game.State)
+                switch (_game.State)
                 {
                     // After bet period, start with opening roll
                     case GameState.OpeningRollBets:
-                        game.State = GameState.OpeningRoll;
+                        _game.State = GameState.OpeningRoll;
                         break;
                     // After opening roll completed, start subsequent roll bet period
                     case GameState.OpeningRoll:
-                        game.State = GameState.SubsequentRollBets;
+                        _game.State = GameState.SubsequentRollBets;
                         break;
                     // After bet period, start subsequent roll
                     case GameState.SubsequentRollBets:
-                        game.State = GameState.SubsequentRoll;
+                        _game.State = GameState.SubsequentRoll;
                         break;
-                    // If on subsequent roll, and game not completed, stay there until game completion
+                    // If on subsequent roll, and _game not completed, stay there until _game completion
                     default:
                         break;
                 }
             }
 
-            return game;
+            return _game;
+        }
+
+        // Function to force game into specific state. Mainly used to set up unit tests.
+        public Models.Game OverrideGame(Models.Game newGame)
+        {
+            _game = newGame;
+            return _game;
         }
 
         // Helper function to determine if opening roll can move to subsequent roll, because total rolled can be a point

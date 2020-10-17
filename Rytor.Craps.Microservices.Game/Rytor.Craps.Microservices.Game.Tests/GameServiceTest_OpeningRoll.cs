@@ -9,25 +9,29 @@ namespace Rytor.Craps.Microservices.Game.Tests
 {
     public class GameServiceTest_OpeningRoll
     {
-        private Models.Game _game;
         private readonly GameService _gameService;
 
         public GameServiceTest_OpeningRoll()
         {
             _gameService = new GameService();
+
+            // Override Game State to OpeningRoll for tests
+            Models.Game newGame = new Models.Game();
+            newGame.State = GameState.OpeningRoll;
+            _gameService.OverrideGame(newGame);
         }
 
         [Fact]
         public void HandleRoll_OpeningRoll_TwoRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(1, 1);
 
             // call HandleRoll with a two
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -43,13 +47,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_ThreeRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(1, 2);
 
             // call HandleRoll with a three
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -65,13 +69,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_SoftFourRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(3, 1);
 
             // call HandleRoll with a four
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -85,13 +89,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_HardFourRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(2, 2);
 
             // call HandleRoll with a four
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -105,13 +109,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_FiveRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(2, 3);
 
             // call HandleRoll with a five
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -124,13 +128,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_SoftSixRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(5, 1);
 
             // call HandleRoll with a six
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -144,13 +148,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_HardSixRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(3, 3);
 
             // call HandleRoll with a six
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -164,13 +168,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_SevenRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(3, 4);
 
             // call HandleRoll with a seven
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -183,13 +187,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_SoftEightRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(6, 2);
 
             // call HandleRoll with a eight
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -203,13 +207,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_HardEightRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(4, 4);
 
             // call HandleRoll with a eight
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -223,13 +227,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_NineRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(4, 5);
 
             // call HandleRoll with a nine
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -242,13 +246,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_SoftTenRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(6, 4);
 
             // call HandleRoll with a ten
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -262,13 +266,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_HardTenRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(5, 5);
 
             // call HandleRoll with a ten
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game isn't marked as completed and correct events are triggered
             Assert.True(_game.Completed == false);
@@ -282,13 +286,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_ElevenRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(6, 5);
 
             // call HandleRoll with a eleven
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);
@@ -303,13 +307,13 @@ namespace Rytor.Craps.Microservices.Game.Tests
         public void HandleRoll_OpeningRoll_TwelveRolled_ReturnTrue()
         {
             // instantiate Game
-            _game = new Models.Game();
+            Models.Game _game;
             
             // instantiate roll result
             RollResult roll = ForceRollResult(6, 6);
 
             // call HandleRoll with a twelve
-            _game = _gameService.HandleRoll(roll, _game);
+            _game = _gameService.HandleRoll(roll);
 
             // Make sure game is marked as completed and correct events are triggered
             Assert.True(_game.Completed == true);

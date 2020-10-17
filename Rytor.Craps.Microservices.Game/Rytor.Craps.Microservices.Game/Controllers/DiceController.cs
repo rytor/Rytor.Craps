@@ -19,9 +19,9 @@ namespace Rytor.Craps.Microservices.Game.Controllers
 
         [HttpGet]
         [Route("roll")]
-        public int Roll()
+        public ActionResult<RollResult> Roll()
         {
-            return _dice.Roll().Total;
+            return Ok(_dice.Roll());
         }
     }
 }
