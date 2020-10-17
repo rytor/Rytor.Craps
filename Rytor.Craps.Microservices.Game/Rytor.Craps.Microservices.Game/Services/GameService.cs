@@ -13,6 +13,12 @@ namespace Rytor.Craps.Microservices.Game.Services
             _game = ResetGame();
         }
 
+        // Function to return current game
+        public Models.Game GetGame()
+        {
+            return _game;
+        }
+
         // Primary function which occurs after a roll has taken place - updates any events triggered by game state and specific roll
         public Models.Game HandleRoll(RollResult roll)
         {
@@ -156,7 +162,8 @@ namespace Rytor.Craps.Microservices.Game.Services
         // Function to set _game object to clean slate following _game completion
         public Models.Game ResetGame()
         {
-            return new Models.Game();
+            _game = new Models.Game();
+            return _game;
         }
 
         // Function to advance _game progress, depending on situation
@@ -165,7 +172,7 @@ namespace Rytor.Craps.Microservices.Game.Services
             // If _game completed (ie. opening roll hits 2/3/7/11/12, point is hit, seven is hit after opening roll) start all over
             if (_game.Completed)
             {
-                return ResetGame();
+                _game = ResetGame();
             }
             else
             {
