@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+    game_rytorcraps:
+        # Path to dockerfile.
+        # '.' represents the current directory in which
+        # docker-compose.yml is present.
+        build: "./Rytor.Craps.Microservices.Game/Rytor.Craps.Microservices.Game"
+    
+        # Mapping of container port to host
+        
+        ports:
+          - "5006:5000"
+    
+    account_rytorcraps:
+        # Path to dockerfile.
+        # '.' represents the current directory in which
+        # docker-compose.yml is present.
+        build: "./Rytor.Craps.Microservices.Account/Rytor.Craps.Microservices.Account"
+    
+        # Mapping of container port to host
+        
+        ports:
+          - "5002:5000"
+
+    balance_rytorcraps:
+         # Path to dockerfile.
+        # '.' represents the current directory in which
+        # docker-compose.yml is present.
+        build: "./Rytor.Craps.Microservices.Balance/Rytor.Craps.Microservices.Balance"
+    
+        # Mapping of container port to host
+        
+        ports:
+          - "5004:5000"
