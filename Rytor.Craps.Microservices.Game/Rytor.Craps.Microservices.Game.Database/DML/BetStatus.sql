@@ -1,0 +1,5 @@
+insert into dbo.BetStatus (Description) VALUES ('Open')
+insert into dbo.BetStatus (Description) VALUES ('Cancelled')
+insert into dbo.BetStatus (Description) VALUES ('Push')
+insert into dbo.BetStatus (Description) VALUES ('Won')
+insert into dbo.BetStatus (Description) VALUES ('Lost')
