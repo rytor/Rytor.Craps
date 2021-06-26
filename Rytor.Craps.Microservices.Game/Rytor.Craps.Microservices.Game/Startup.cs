@@ -29,6 +29,7 @@ namespace Rytor.Craps.Microservices.Game
         {
             services.AddSingleton<IGameRepository>(x => new GameRepository(Configuration["Database:ConnectionString"], x.GetService<ILoggerFactory>()));
             services.AddSingleton<IGameService, GameService>();
+            services.AddSingleton<IBetService, BetService>();
             services.AddControllers().AddNewtonsoftJson();
         }
 

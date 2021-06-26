@@ -82,10 +82,12 @@ insert into dbo.GameEventPayout (GameEventId, PayoutOddsLeft, PayoutOddsRight) V
 insert into dbo.GameEventPayout (GameEventId, PayoutOddsLeft, PayoutOddsRight) VALUES (25, 15, 1);
 
 CREATE TABLE Bet (
-    AccountId int NOT NULL PRIMARY KEY,
+    Id int NOT NULL PRIMARY KEY,
+    AccountId int NOT NULL,
     GameEventId int NOT NULL,
     Amount BIGINT DEFAULT 0,
     BetStatusId int NOT NULL,
+    Payout BIGINT DEFAULT 0,
     CreateDate DATETIME DEFAULT GETDATE()
 );
 
