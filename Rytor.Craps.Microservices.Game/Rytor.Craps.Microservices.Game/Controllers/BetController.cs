@@ -106,7 +106,12 @@ namespace Rytor.Craps.Microservices.Game.Controllers
         [HttpPost("handle")]
         public ActionResult<IEnumerable<Bet>> HandleBets([FromBody] HandleBetRequest request)
         {
-            return Ok(_betService.HandleBets(request.Game, request.Roll, request.Bets));
+            IEnumerable<Bet> result = _betService.HandleBets(request.Game, request.Roll, request.Bets);
+            foreach (Bet bet in result)
+            {
+                _gameRepository.UpdateBet(bet);
+            }
+            return Ok(result);
         }
     }
 }

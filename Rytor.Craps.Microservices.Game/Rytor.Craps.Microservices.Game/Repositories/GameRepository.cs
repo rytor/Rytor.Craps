@@ -165,7 +165,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             string sql = $@"UPDATE dbo.Bet
                             SET AccountId = @AccountId,
-                            GameEvent = @GameEventId,
+                            GameEventId = @GameEventId,
                             Amount = @Amount,
                             BetStatusId = @BetStatusId,
                             Payout = @Payout

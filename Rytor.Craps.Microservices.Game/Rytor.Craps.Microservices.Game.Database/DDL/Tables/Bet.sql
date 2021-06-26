@@ -1,5 +1,5 @@
 CREATE TABLE Bet (
-    Id int NOT NULL PRIMARY KEY,
+    Id int IDENTITY(1,1) PRIMARY KEY,
     AccountId int NOT NULL,
     GameEventId int NOT NULL,
     Amount BIGINT DEFAULT 0,
