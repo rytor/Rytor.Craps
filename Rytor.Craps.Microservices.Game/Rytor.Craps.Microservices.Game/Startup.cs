@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Rytor.Craps.Microservices.Game.Services;
+using Rytor.Craps.Microservices.Game.Repositories;
 
 namespace Rytor.Craps.Microservices.Game
 {
@@ -26,7 +27,9 @@ namespace Rytor.Craps.Microservices.Game
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IGameRepository>(x => new GameRepository(Configuration["Database:ConnectionString"], x.GetService<ILoggerFactory>()));
             services.AddSingleton<IGameService, GameService>();
+            services.AddSingleton<IBetService, BetService>();
             services.AddControllers().AddNewtonsoftJson();
         }
 

@@ -14,10 +14,12 @@ namespace Rytor.Craps.Microservices.Game.Controllers
     public class GameController : ControllerBase
     {
         private IGameService _gameService;
+        private IBetService _betService;
 
-        public GameController(IGameService gameService)
+        public GameController(IGameService gameService, IBetService betService)
         {
             _gameService = gameService;
+            _betService = betService;
         }
 
         [HttpGet]
