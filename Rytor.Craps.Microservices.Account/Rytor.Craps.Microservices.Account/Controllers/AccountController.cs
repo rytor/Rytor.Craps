@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Rytor.Craps.Microservices.Account.Interfaces;
+using Rytor.Craps.Microservices.Account.Repositories;
 
 namespace Rytor.Craps.Microservices.Account.Controllers
 {

@@ -1,41 +1,35 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.Extensions.Logging;
-using Dapper;
 using Models = Rytor.Craps.Microservices.Account.Models;
 
 namespace Rytor.Craps.Microservices.Account.Repositories
 {
-    public class AccountRepository : IAccountRepository
+    public class MockAccountRepository : IAccountRepository
     {
         private readonly ILogger _logger;
-        private readonly string _connectionString;
-        private readonly string _className = "AccountRepository";
+        private readonly string _className = "MockAccountRepository";
 
-        public AccountRepository(string connectionString, ILoggerFactory loggerFactory)
+        private List<Models.Account> _accounts = new List<Models.Account> {
+            new Models.Account { Id = 1, TwitchId = "rytor", CreateDate = new DateTime(2020, 6, 27, 8, 30, 52) },
+            new Models.Account { Id = 1, TwitchId = "MockTwitchUser1", CreateDate = new DateTime(2020, 6, 28, 8, 30, 52) },
+            new Models.Account { Id = 1, TwitchId = "MockTwitchUser2", CreateDate = new DateTime(2020, 6, 29, 8, 30, 52) }
+        };
+
+        public MockAccountRepository(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<AccountRepository>();
-            _logger.LogInformation("AccountRepository initialized.");
-            _connectionString = connectionString;
+            _logger = loggerFactory.CreateLogger<MockAccountRepository>();
+            _logger.LogInformation("MockAccountRepository initialized.");
         }
 
         public IEnumerable<Models.Account> GetAccounts()
         {
-            IEnumerable<Models.Account> result;
-
-            string sql = $@"SELECT Id, TwitchId, CreateDate from dbo.Account";
-
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Accounts");
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    result = connection.Query<Models.Account>(sql);
-                }
 
-                return result;
+                return _accounts;
             }
             catch (Exception e)
             {
@@ -48,15 +42,11 @@ namespace Rytor.Craps.Microservices.Account.Repositories
         {
             Models.Account result;
 
-            string sql = $@"SELECT Id, TwitchId, CreateDate from dbo.Account WHERE Id = {id}";
-
             try
             {
                 _logger.LogDebug($@"{_className}: Getting Account {id}");
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    result = connection.Query<Models.Account>(sql).First();
-                }
+
+                result = _accounts.Where(x => x.Id == id).FirstOrDefault();
 
                 return result;
             }
@@ -71,17 +61,14 @@ namespace Rytor.Craps.Microservices.Account.Repositories
         {
             int newId;
 
-            string sql = $@"INSERT INTO dbo.Account (@twitchId) 
-                            VALUES (@TwitchId)
-                            SELECT CAST(SCOPE_IDENTITY() as int)";
-
             try
             {
                 _logger.LogDebug($@"{_className}: Creating Account {account.TwitchId}");
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    newId = connection.Query<int>(sql, new { twitchId = account.TwitchId }).Single();
-                }
+
+                newId = _accounts.Count() + 1;
+                account.Id = newId;
+
+                _accounts.Add(account);
 
                 return newId;
             }
@@ -93,17 +80,16 @@ namespace Rytor.Craps.Microservices.Account.Repositories
         }
 
         public Models.Account UpdateAccount(Models.Account account)
-        {
-            string sql = $@"UPDATE dbo.Account
-                            SET TwitchId = @twitchId
-                            WHERE Id = @id";
-            
+        {            
             try
             {
                 _logger.LogDebug($@"{_className}: Updating Account {account.Id} to {account.TwitchId}");
-                using (var connection = new SqlConnection(_connectionString))
+
+                int index = _accounts.FindIndex(x => x.Id == account.Id);
+
+                if (index > -1)
                 {
-                    connection.Execute(sql, new { id = account.Id, twitchId = account.TwitchId });
+                    _accounts[index].TwitchId = account.TwitchId;
                 }
 
                 return GetAccountById(account.Id);
@@ -116,16 +102,16 @@ namespace Rytor.Craps.Microservices.Account.Repositories
         }
 
         public bool DeleteAccount(int id)
-        {
-            string sql = $@"DELETE FROM dbo.Account
-                            WHERE Id = @deleteId";
-            
+        {            
             try
             {
                 _logger.LogDebug($@"{_className}: Deleting Account {id}");
-                using (var connection = new SqlConnection(_connectionString))
+                
+                int index = _accounts.FindIndex(x => x.Id == id);
+
+                if (index > -1)
                 {
-                    connection.Execute(sql, new { deleteId = id });
+                    _accounts.RemoveAt(index);
                 }
 
                 return true;

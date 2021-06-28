@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Models = Rytor.Craps.Microservices.Account.Models;
 
-namespace Rytor.Craps.Microservices.Account.Interfaces
+namespace Rytor.Craps.Microservices.Account.Repositories
 {
     public interface IAccountRepository
     {
