@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Models = Rytor.Craps.Microservices.Balance.Models;
-using Rytor.Craps.Microservices.Balance.Interfaces;
+using Rytor.Craps.Microservices.Balance.Repositories;
 
 namespace Rytor.Craps.Microservices.Balance.Controllers
 {

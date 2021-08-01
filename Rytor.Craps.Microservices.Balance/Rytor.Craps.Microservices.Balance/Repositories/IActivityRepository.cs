@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Rytor.Craps.Microservices.Balance.Interfaces
+namespace Rytor.Craps.Microservices.Balance.Repositories
 {
     public interface IActivityRepository
     {
