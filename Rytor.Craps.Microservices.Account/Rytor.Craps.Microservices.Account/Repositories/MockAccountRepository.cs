@@ -13,8 +13,8 @@ namespace Rytor.Craps.Microservices.Account.Repositories
 
         private List<Models.Account> _accounts = new List<Models.Account> {
             new Models.Account { Id = 1, TwitchId = "rytor", CreateDate = new DateTime(2020, 6, 27, 8, 30, 52) },
-            new Models.Account { Id = 1, TwitchId = "MockTwitchUser1", CreateDate = new DateTime(2020, 6, 28, 8, 30, 52) },
-            new Models.Account { Id = 1, TwitchId = "MockTwitchUser2", CreateDate = new DateTime(2020, 6, 29, 8, 30, 52) }
+            new Models.Account { Id = 2, TwitchId = "MockTwitchUser1", CreateDate = new DateTime(2020, 6, 28, 8, 30, 52) },
+            new Models.Account { Id = 3, TwitchId = "MockTwitchUser2", CreateDate = new DateTime(2020, 6, 29, 8, 30, 52) }
         };
 
         public MockAccountRepository(ILoggerFactory loggerFactory)

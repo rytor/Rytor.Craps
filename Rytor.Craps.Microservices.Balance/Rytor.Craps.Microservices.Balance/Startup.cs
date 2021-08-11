@@ -26,7 +26,14 @@ namespace Rytor.Craps.Microservices.Balance
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IBalanceRepository>(x => new BalanceRepository(Configuration["Database:ConnectionString"], x.GetService<ILoggerFactory>()));
+            if (Configuration["Database:UseMock"] == "true") {
+                services.AddSingleton<IBalanceRepository>(x => new MockBalanceRepository(x.GetService<ILoggerFactory>()));
+            }
+                
+            else {
+                services.AddSingleton<IBalanceRepository>(x => new BalanceRepository(Configuration["Database:ConnectionString"], x.GetService<ILoggerFactory>()));
+            }
+                
             services.AddSingleton<IActivityRepository>(x => new ActivityRepository(Configuration["Database:ConnectionString"], x.GetService<ILoggerFactory>()));
 
             services.AddControllers();

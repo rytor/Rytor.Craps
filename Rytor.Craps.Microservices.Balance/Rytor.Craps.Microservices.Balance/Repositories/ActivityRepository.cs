@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Dapper;
-using Rytor.Craps.Microservices.Balance.Interfaces;
 using Models = Rytor.Craps.Microservices.Balance.Models;
 using Rytor.Craps.Microservices.Balance.Models;
 
