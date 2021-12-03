@@ -1,0 +1,15 @@
+{
+    "image": "mcr.microsoft.com/dotnet/sdk:6.0",
+    "forwardPorts": [5000,5002,5004,5006],
+    "extensions": ["ms-dotnettools.csharp", "ms-azuretools.vscode-docker"],
+    "features": {
+        "git": {
+            "version": "latest",
+            "ppa": false
+        },
+        "docker-from-docker": {
+            "version": "latest",
+            "moby": true
+        }
+    }
+  }
