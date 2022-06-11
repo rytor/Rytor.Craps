@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rytor.Craps.Microservices.B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rytor.Craps.Microservices.Balance.Tests", "Rytor.Craps.Microservices.Balance\Rytor.Craps.Microservices.Balance.Tests\Rytor.Craps.Microservices.Balance.Tests.csproj", "{5701F96A-81A3-4891-BE98-3097427EAB48}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Rytor.Craps.Microservices.Orchestrator", "Rytor.Craps.Microservices.Orchestrator", "{48AEF6D4-FF09-4A47-B565-98948BA0A988}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rytor.Craps.Microservices.Orchestrator", "Rytor.Craps.Microservices.Orchestrator\Rytor.Craps.Microservices.Orchestrator\Rytor.Craps.Microservices.Orchestrator.csproj", "{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +96,18 @@ Global
 		{5701F96A-81A3-4891-BE98-3097427EAB48}.Release|x64.Build.0 = Release|Any CPU
 		{5701F96A-81A3-4891-BE98-3097427EAB48}.Release|x86.ActiveCfg = Release|Any CPU
 		{5701F96A-81A3-4891-BE98-3097427EAB48}.Release|x86.Build.0 = Release|Any CPU
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}.Debug|x64.Build.0 = Debug|Any CPU
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}.Debug|x86.Build.0 = Debug|Any CPU
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}.Release|x64.ActiveCfg = Release|Any CPU
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}.Release|x64.Build.0 = Release|Any CPU
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}.Release|x86.ActiveCfg = Release|Any CPU
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D8EE13B9-FF0D-43C2-8AC0-893F965AF349} = {0FEF4956-F108-4573-BFEE-BCF87E4E670A}
@@ -99,5 +115,6 @@ Global
 		{4270F5E1-C61D-4F8E-A6C1-BE5229EF8318} = {C29EA996-61FB-4CFF-BFD9-B84622A82596}
 		{134A62D5-907C-4308-8814-7C33D2DD5334} = {D7635A5A-4F90-43C6-8B2E-B939A38321BD}
 		{5701F96A-81A3-4891-BE98-3097427EAB48} = {D7635A5A-4F90-43C6-8B2E-B939A38321BD}
+		{3AD67FAA-EFE2-4C37-82BB-51DA035C59A3} = {48AEF6D4-FF09-4A47-B565-98948BA0A988}
 	EndGlobalSection
 EndGlobal

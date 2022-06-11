@@ -12,7 +12,7 @@ RUN dotnet publish -c Release -o out
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 EXPOSE 5000
-ENV ASPNETCORE_URlS=http://*:5004
+ENV ASPNETCORE_URlS=http://*:5000
 WORKDIR /app
 COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "Rytor.Craps.Microservices.Balance.dll"]
+ENTRYPOINT ["dotnet", "Rytor.Craps.Microservices.Orchestrator.dll"]
