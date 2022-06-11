@@ -9,7 +9,7 @@ services:
         # Mapping of container port to host
         
         ports:
-          - "5006:5000"
+          - "5006:5006"
     
     account_rytorcraps:
         # Path to dockerfile.
@@ -20,7 +20,7 @@ services:
         # Mapping of container port to host
         
         ports:
-          - "5002:5000"
+          - "5002:5002"
 
     balance_rytorcraps:
          # Path to dockerfile.
@@ -31,4 +31,15 @@ services:
         # Mapping of container port to host
         
         ports:
-          - "5004:5000"
+          - "5004:5004"
+
+    orchestrator_rytorcraps:
+        # Path to dockerfile.
+        # '.' represents the current directory in which
+        # docker-compose.yml is present.
+        build: "./Rytor.Craps.Microservices.Orchestrator/Rytor.Craps.Microservices.Orchestrator"
+    
+        # Mapping of container port to host
+        
+        ports:
+          - "5000:5000"
