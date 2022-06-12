@@ -11,14 +11,14 @@ namespace Rytor.Craps.Microservices.Orchestrator.Services
     public class BalanceService : IBalanceService
     {
         string _balanceURL;
-        private readonly ILogger<RegistrationService> _logger;
+        private readonly ILogger<BalanceService> _logger;
         private readonly string _className = "BalanceService";
 
         public BalanceService(string balanceURL, ILoggerFactory loggerFactory)
         {
             _balanceURL = balanceURL;
-             _logger = loggerFactory.CreateLogger<RegistrationService>();
-            _logger.LogInformation("RegistrationService initialized.");
+             _logger = loggerFactory.CreateLogger<BalanceService>();
+            _logger.LogInformation("BalanceService initialized.");
         }
 
 

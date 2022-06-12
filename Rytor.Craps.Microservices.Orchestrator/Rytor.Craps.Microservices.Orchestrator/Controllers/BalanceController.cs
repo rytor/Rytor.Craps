@@ -10,19 +10,19 @@ public class BalanceController : ControllerBase
 {
     private readonly ILogger<BalanceController> _logger;
     private IBalanceService _balanceService;
-    private IRegistrationService _registrationService;
+    private IAccountService _accountService;
 
-    public BalanceController(IRegistrationService registrationService, IBalanceService balanceService, ILogger<BalanceController> logger)
+    public BalanceController(IAccountService accountService, IBalanceService balanceService, ILogger<BalanceController> logger)
     {
         _logger = logger;
-        _registrationService = registrationService;
+        _accountService = accountService;
         _balanceService = balanceService;
     }
 
     [HttpGet("{twitchId}")]
     public ActionResult<Balance> Get(string twitchId)
     {
-        int accountId = _registrationService.CheckInAccount(twitchId).Result;
+        int accountId = _accountService.CheckInAccount(twitchId).Result;
         if (accountId > 0)
         {
             Task<Balance> result = _balanceService.GetBalance(accountId);
