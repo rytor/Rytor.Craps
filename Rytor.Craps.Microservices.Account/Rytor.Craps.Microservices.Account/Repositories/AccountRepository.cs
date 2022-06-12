@@ -45,7 +45,7 @@ namespace Rytor.Craps.Microservices.Account.Repositories
             }
         }
 
-        public Models.Account GetAccountById(int id)
+        private Models.Account GetAccountById(int id)
         {
             Models.Account result;
 
@@ -68,11 +68,34 @@ namespace Rytor.Craps.Microservices.Account.Repositories
             }
         }
 
+        public Models.Account GetAccountByTwitchId(string twitchId)
+        {
+            Models.Account result;
+
+            string sql = $@"SELECT Id, TwitchId, CreateDate from dbo.Account WHERE TwitchId = '{twitchId}'";
+
+            try
+            {
+                _logger.LogDebug($@"{_className}: Getting Account {twitchId}");
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    result = connection.Query<Models.Account>(sql).First();
+                }
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($@"{_className}: Error getting Account {twitchId} - {e.Message}");
+                return null;
+            }
+        }
+
         public int CreateAccount(Models.Account account)
         {
             int newId;
 
-            string sql = $@"INSERT INTO dbo.Account (@twitchId) 
+            string sql = $@"INSERT INTO dbo.Account (twitchId) 
                             VALUES (@TwitchId)
                             SELECT CAST(SCOPE_IDENTITY() as int)";
 
