@@ -9,19 +9,19 @@ using Rytor.Craps.Microservices.Orchestrator.Models;
 
 namespace Rytor.Craps.Microservices.Orchestrator.Services
 {
-    public class RegistrationService : IRegistrationService
+    public class AccountService : IAccountService
     {
-        string _accountURL;
-        string _balanceURL;
-        private readonly ILogger<RegistrationService> _logger;
-        private readonly string _className = "RegistrationService";
+        private readonly string _accountURL;
+        private readonly string _balanceURL;
+        private readonly ILogger<AccountService> _logger;
+        private readonly string _className = "AccountService";
 
-        public RegistrationService(string accountURL, string balanceURL, ILoggerFactory loggerFactory)
+        public AccountService(string accountURL, string balanceURL, ILoggerFactory loggerFactory)
         {
             _accountURL = accountURL;
             _balanceURL = balanceURL;
-             _logger = loggerFactory.CreateLogger<RegistrationService>();
-            _logger.LogInformation("RegistrationService initialized.");
+             _logger = loggerFactory.CreateLogger<AccountService>();
+            _logger.LogInformation("AccountService initialized.");
         }
 
         public async Task<int> CheckInAccount(string twitchId)
@@ -45,6 +45,7 @@ namespace Rytor.Craps.Microservices.Orchestrator.Services
                 HttpResponseMessage postAcctResponse = await client.PostAsJsonAsync(String.Concat(_accountURL, "/account/"), newAccount);
                 if (postAcctResponse.StatusCode == HttpStatusCode.Created)
                 {
+                    // TO-DO: Set up event system to automatically create this
                     int newId = postAcctResponse.Content.ReadFromJsonAsync<int>().Result;
                     Balance newBalance = new Balance { AccountId = newId, CurrentBalance = 100, CurrentFloor = 100 };
                     HttpResponseMessage postBalResponse = await client.PostAsJsonAsync(String.Concat(_balanceURL, "/balance/"), newBalance);
@@ -56,6 +57,24 @@ namespace Rytor.Craps.Microservices.Orchestrator.Services
             }
 
             return 0;
+        }
+
+        public async Task<List<Account>> GetAccounts()
+        {
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) =>
+            {
+                return true;
+            };
+            HttpClient client = new HttpClient(httpClientHandler);
+            HttpResponseMessage getResponse = await client.GetAsync(String.Concat(_accountURL, "/account"));
+            if (getResponse.StatusCode == HttpStatusCode.OK)
+            {
+                var result = await getResponse.Content.ReadFromJsonAsync<List<Account>>();
+                return result;
+            }
+            else
+                return null;
         }
     }
 }

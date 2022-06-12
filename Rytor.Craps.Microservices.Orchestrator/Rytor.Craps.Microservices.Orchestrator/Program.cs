@@ -16,8 +16,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IRegistrationService, RegistrationService>(x => new RegistrationService(configuration.GetValue<string>("Instruments:Account"), configuration.GetValue<string>("Instruments:Balance"), x.GetService<ILoggerFactory>()));
+builder.Services.AddSingleton<IAccountService, AccountService>(x => new AccountService(configuration.GetValue<string>("Instruments:Account"), configuration.GetValue<string>("Instruments:Balance"), x.GetService<ILoggerFactory>()));
 builder.Services.AddSingleton<IBalanceService, BalanceService>(x => new BalanceService(configuration.GetValue<string>("Instruments:Balance"), x.GetService<ILoggerFactory>()));
+builder.Services.AddSingleton<IGameService, GameService>(x => new GameService(configuration.GetValue<string>("Instruments:Game"), x.GetService<ILoggerFactory>()));
 
 var app = builder.Build();
 

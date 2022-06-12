@@ -1,4 +1,6 @@
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Rytor.Craps.Microservices.Orchestrator.Interfaces;
 using Rytor.Craps.Microservices.Orchestrator.Models;
 
 namespace Rytor.Craps.Microservices.Orchestrator.Controllers;
@@ -8,9 +10,13 @@ namespace Rytor.Craps.Microservices.Orchestrator.Controllers;
 public class GameManagerController : ControllerBase
 {
     private readonly ILogger<GameManagerController> _logger;
+    private readonly IAccountService _accountService;
+    private readonly IGameService _gameService;
 
-    public GameManagerController(ILogger<GameManagerController> logger)
+    public GameManagerController(IAccountService accountService, IGameService gameService, ILogger<GameManagerController> logger)
     {
+        _accountService = accountService;
+        _gameService = gameService;
         _logger = logger;
     }
 
@@ -18,11 +24,19 @@ public class GameManagerController : ControllerBase
     public ActionResult<GameState> Get()
     {
         // return game state/bet state for Front-End
-        List<Bet> b = new List<Bet>();
-        b.Add(new Bet {player = "rytor", amount = 100, location = "six"});
-        b.Add(new Bet {player = "max", amount = 300, location = "nine"});
-        b.Add(new Bet {player = "jason", amount = 200, location = "eight"});
-        GameState mockState = new GameState { rolling = false, bets = b, point = "five" };
+        List<Account> a = _accountService.GetAccounts().Result;
+        List<Bet> b = _gameService.GetBets().Result;
+        List<string> c = GameEvent.GetNames(typeof(GameEvent)).ToList();
+
+        // reconcile account ids with account usernames for display
+        List<BetState> bs = new List<BetState>();
+        foreach (Bet b1 in b)
+        {
+            int locationIndex = (int)b1.GameEventId;
+            bs.Add(new BetState {player = a.Where(y => y.Id == b1.AccountId).First().TwitchId, amount = b1.Amount, location = c[locationIndex-1].ToLower()});
+        }
+
+        GameState mockState = new GameState { rolling = false, bets = bs, point = "five" };
 
         return Ok(mockState);
     }
