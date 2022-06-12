@@ -27,19 +27,19 @@ namespace Rytor.Craps.Microservices.Account.Controllers
             return Ok(_accountRepository.GetAccounts());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{twitchId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetById(int id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult GetByTwitchId(string twitchId)
         {
-            var result = _accountRepository.GetAccountById(id);
+            var result = _accountRepository.GetAccountByTwitchId(twitchId);
             if (result != null)
             {
                 return Ok(result);
             }
             else
             {
-                return NotFound();
+                return NoContent();
             }
         }
 
