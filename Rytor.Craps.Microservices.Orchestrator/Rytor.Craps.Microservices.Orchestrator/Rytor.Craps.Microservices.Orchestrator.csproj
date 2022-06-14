@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Rytor.Libraries.Dice" Version="1.0.3" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,10 @@
 namespace Rytor.Craps.Microservices.Orchestrator.Models
 {
-    public class GameState
+    public enum GameState
     {
-        public bool rolling { get; set; }
-        public List<BetState> bets { get; set; }
-        public string point { get; set; }
+        OpeningRollBets,
+        OpeningRoll,
+        SubsequentRollBets,
+        SubsequentRoll
     }
 }

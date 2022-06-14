@@ -5,5 +5,7 @@ namespace Rytor.Craps.Microservices.Orchestrator.Interfaces
     public interface IGameService
     {
         Task<List<Bet>> GetBets();
+        bool StartAutomatedGame();
+        bool EndAutomatedGame();
     }
 }
