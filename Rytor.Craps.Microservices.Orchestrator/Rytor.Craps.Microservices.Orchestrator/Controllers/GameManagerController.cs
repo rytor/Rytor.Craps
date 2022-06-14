@@ -21,7 +21,7 @@ public class GameManagerController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<GameState> Get()
+    public ActionResult<GameUIState> Get()
     {
         // return game state/bet state for Front-End
         List<Account> a = _accountService.GetAccounts().Result;
@@ -36,20 +36,30 @@ public class GameManagerController : ControllerBase
             bs.Add(new BetState {player = a.Where(y => y.Id == b1.AccountId).First().TwitchId, amount = b1.Amount, location = c[locationIndex-1].ToLower()});
         }
 
-        GameState mockState = new GameState { rolling = false, bets = bs, point = "five" };
+        GameUIState mockState = new GameUIState { rolling = false, bets = bs, point = "five" };
 
         return Ok(mockState);
     }
 
-    [HttpPost(Name = "advance")]
-    public ActionResult<string> RollAndAdvanceGame()
+    [HttpPut("start")]
+    public ActionResult<string> StartAutomatedGame()
     {
-        // roll dice (if needed)
+        bool gameStarted = _gameService.StartAutomatedGame();
 
-        // send game events to bet service to fulfill bets
+        if (gameStarted)
+            return Ok();
+        else
+            return BadRequest();
+    }
 
-        // advance game state
+    [HttpPut("end")]
+    public ActionResult<string> EndAutomatedGame()
+    {
+        bool gameEnded = _gameService.EndAutomatedGame();
 
-        return Ok(string.Empty);
+        if (gameEnded)
+            return Ok();
+        else
+            return BadRequest();
     }
 }
