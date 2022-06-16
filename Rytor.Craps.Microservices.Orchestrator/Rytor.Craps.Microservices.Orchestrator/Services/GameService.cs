@@ -90,7 +90,6 @@ namespace Rytor.Craps.Microservices.Orchestrator.Services
                         {                        
                             if (ticks > 0)
                             {
-                                _logger.LogInformation($"Tick {ticks}");
                                 HttpResponseMessage getGameStateResponse = await client.GetAsync(String.Concat(_gameURL, "/game"));
                                 if (getGameStateResponse.StatusCode == HttpStatusCode.OK)
                                 {
@@ -102,51 +101,32 @@ namespace Rytor.Craps.Microservices.Orchestrator.Services
                                     else
                                     {
                                         RollResult diceRoll = new RollResult();
-                                        // Important to note that the game state here covered the END of the interval. So on OpeningRollBets, you need to do OpeningRoll, on OpeningRoll, you need to do SubsequentBets (if necessary), etc
                                         switch (game.State)
                                         {
                                             case GameState.OpeningRollBets:
                                                 _logger.LogInformation("Betting is closed!");
+                                                game = await AdvanceGame();
+                                                break;
+                                            case GameState.OpeningRoll:
                                                 _logger.LogInformation("Rolling Dice...");
                                                 diceRoll = await RollDice();
                                                 _logger.LogInformation($"Dice has rolled a {diceRoll.Total} - {diceRoll.Dice[0].Value}|{diceRoll.Dice[1].Value}");
                                                 game = await HandleDiceRoll(diceRoll);
-                                                game = await AdvanceGame();
                                                 _logger.LogInformation($"Closing Game State: Phase - {game.State} / Number of Rolls - {game.NumberOfRolls} / Point - {game.Point} / LastGameEvents - {game.LastGameEvents.ToString()} / Completed - {game.Completed}");
-                                                
-                                                break;
-                                            case GameState.OpeningRoll:
-                                                if (game.Completed)
-                                                {
-                                                    _logger.LogInformation($"Game Finished! Resetting.");
-                                                    ResetGame();
-                                                }
-                                                else
-                                                {
-                                                    _logger.LogInformation($"Point is {game.Point}! Place your bets!");
-                                                    game = await AdvanceGame();
-                                                }
+                                                game = await AdvanceGame();
                                                 break;
                                             case GameState.SubsequentRollBets:
+                                                _logger.LogInformation($"Point is {game.Point}! Betting is closed!");
+                                                game = await AdvanceGame();
+                                                break;
+                                            case GameState.SubsequentRoll:
                                                 _logger.LogInformation("Betting is closed!");
                                                 _logger.LogInformation("Rolling Dice...");
                                                 diceRoll = await RollDice();
                                                 _logger.LogInformation($"Dice has rolled a {diceRoll.Total} - {diceRoll.Dice[0].Value}|{diceRoll.Dice[1].Value}");
                                                 game = await HandleDiceRoll(diceRoll);
-                                                game = await AdvanceGame();
                                                 _logger.LogInformation($"Closing Game State: Phase - {game.State} / Number of Rolls - {game.NumberOfRolls} / Point - {game.Point} / LastGameEvents - {game.LastGameEvents.ToString()} / Completed - {game.Completed}");
-                                                break;
-                                            case GameState.SubsequentRoll:
-                                                if (game.Completed)
-                                                {
-                                                    _logger.LogInformation($"Game Finished! Resetting.");
-                                                    ResetGame();
-                                                }
-                                                else
-                                                {
-                                                    _logger.LogInformation($"Point is {game.Point} and has not been hit yet! Place your bets!");
-                                                    game = await AdvanceGame();
-                                                }
+                                                game = await AdvanceGame();
                                                 break;
                                             default: break;
                                         }
