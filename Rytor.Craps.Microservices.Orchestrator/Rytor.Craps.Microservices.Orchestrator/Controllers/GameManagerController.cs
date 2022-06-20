@@ -2,6 +2,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Rytor.Craps.Microservices.Orchestrator.Interfaces;
 using Rytor.Craps.Microservices.Orchestrator.Models;
+using Rytor.Libraries.Dice;
 
 namespace Rytor.Craps.Microservices.Orchestrator.Controllers;
 
@@ -24,9 +25,14 @@ public class GameManagerController : ControllerBase
     public ActionResult<GameUIState> Get()
     {
         // return game state/bet state for Front-End
-        List<Account> a = _accountService.GetAccounts().Result;
-        List<Bet> b = _gameService.GetBets().Result;
-        List<string> c = GameEvent.GetNames(typeof(GameEvent)).ToList();
+        List<Account> _allAccounts = _accountService.GetAccounts().Result;
+        List<Bet> _bets = _gameService.GetBets().Result;
+        Game _game = _gameService.GetGame().Result;
+        RollResult _lastRoll = _gameService.GetLastDiceRoll();
+
+        List<string> _allGameStateStrings = GameState.GetNames(typeof(GameState)).ToList();
+        List<string> _allEventStrings = GameEvent.GetNames(typeof(GameEvent)).ToList();
+
 
         // reconcile account ids with account usernames for display
         List<BetState> bs = new List<BetState>();
