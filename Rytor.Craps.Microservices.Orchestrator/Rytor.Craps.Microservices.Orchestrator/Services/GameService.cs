@@ -13,6 +13,7 @@ namespace Rytor.Craps.Microservices.Orchestrator.Services
         private readonly int _phaseInterval;
         private bool _isStarted;
         private PeriodicTimer _timer;
+        private RollResult _lastRoll = new RollResult();
 
         public GameService(int phaseInterval, string gameURL, ILoggerFactory loggerFactory)
         {
@@ -21,6 +22,29 @@ namespace Rytor.Craps.Microservices.Orchestrator.Services
              _isStarted = false;
              _logger = loggerFactory.CreateLogger<GameService>();
             _logger.LogInformation("GameService initialized.");
+        }
+
+        public async Task<Game> GetGame()
+        {
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) =>
+            {
+                return true;
+            };
+            HttpClient client = new HttpClient(httpClientHandler);
+            HttpResponseMessage getResponse = await client.GetAsync(String.Concat(_gameURL, "/game"));
+            if (getResponse.StatusCode == HttpStatusCode.OK)
+            {
+                Game result = await getResponse.Content.ReadFromJsonAsync<Game>();
+                return result;
+            }
+            else
+                return null;
+        }
+
+        public RollResult GetLastDiceRoll()
+        {
+            return _lastRoll;
         }
 
         public async Task<List<Bet>> GetBets()
@@ -39,6 +63,11 @@ namespace Rytor.Craps.Microservices.Orchestrator.Services
             }
             else
                 return null;
+        }
+
+        public TimeSpan GetTimeLeftInInterval()
+        {
+            
         }
 
         public bool StartAutomatedGame()
@@ -100,7 +129,6 @@ namespace Rytor.Craps.Microservices.Orchestrator.Services
                                         ResetGame();
                                     else
                                     {
-                                        RollResult diceRoll = new RollResult();
                                         switch (game.State)
                                         {
                                             case GameState.OpeningRollBets:
@@ -109,9 +137,9 @@ namespace Rytor.Craps.Microservices.Orchestrator.Services
                                                 break;
                                             case GameState.OpeningRoll:
                                                 _logger.LogInformation("Rolling Dice...");
-                                                diceRoll = await RollDice();
-                                                _logger.LogInformation($"Dice has rolled a {diceRoll.Total} - {diceRoll.Dice[0].Value}|{diceRoll.Dice[1].Value}");
-                                                game = await HandleDiceRoll(diceRoll);
+                                                _lastRoll = await RollDice();
+                                                _logger.LogInformation($"Dice has rolled a {_lastRoll.Total} - {_lastRoll.Dice[0].Value}|{_lastRoll.Dice[1].Value}");
+                                                game = await HandleDiceRoll(_lastRoll);
                                                 _logger.LogInformation($"Closing Game State: Phase - {game.State} / Number of Rolls - {game.NumberOfRolls} / Point - {game.Point} / LastGameEvents - {game.LastGameEvents.ToString()} / Completed - {game.Completed}");
                                                 game = await AdvanceGame();
                                                 break;
@@ -122,9 +150,9 @@ namespace Rytor.Craps.Microservices.Orchestrator.Services
                                             case GameState.SubsequentRoll:
                                                 _logger.LogInformation("Betting is closed!");
                                                 _logger.LogInformation("Rolling Dice...");
-                                                diceRoll = await RollDice();
-                                                _logger.LogInformation($"Dice has rolled a {diceRoll.Total} - {diceRoll.Dice[0].Value}|{diceRoll.Dice[1].Value}");
-                                                game = await HandleDiceRoll(diceRoll);
+                                                _lastRoll = await RollDice();
+                                                _logger.LogInformation($"Dice has rolled a {_lastRoll.Total} - {_lastRoll.Dice[0].Value}|{_lastRoll.Dice[1].Value}");
+                                                game = await HandleDiceRoll(_lastRoll);
                                                 _logger.LogInformation($"Closing Game State: Phase - {game.State} / Number of Rolls - {game.NumberOfRolls} / Point - {game.Point} / LastGameEvents - {game.LastGameEvents.ToString()} / Completed - {game.Completed}");
                                                 game = await AdvanceGame();
                                                 break;

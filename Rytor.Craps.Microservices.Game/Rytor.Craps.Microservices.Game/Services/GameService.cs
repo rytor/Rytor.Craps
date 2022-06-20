@@ -190,7 +190,10 @@ namespace Rytor.Craps.Microservices.Game.Services
                     case GameState.SubsequentRollBets:
                         _game.State = GameState.SubsequentRoll;
                         break;
-                    // If on subsequent roll, and _game not completed, stay there until _game completion
+                    case GameState.SubsequentRoll:
+                        // If on subsequent roll, and _game not completed, go back to subsequent roll betting phase
+                        _game.State = GameState.SubsequentRollBets;
+                        break;
                     default:
                         break;
                 }
