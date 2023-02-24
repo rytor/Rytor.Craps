@@ -67,7 +67,7 @@ namespace Rytor.Craps.Microservices.Orchestrator.Services
 
         public TimeSpan GetTimeLeftInInterval()
         {
-            
+            return new TimeSpan(1);
         }
 
         public bool StartAutomatedGame()

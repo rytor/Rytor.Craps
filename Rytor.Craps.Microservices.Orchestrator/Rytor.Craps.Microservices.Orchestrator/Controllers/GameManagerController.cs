@@ -36,15 +36,16 @@ public class GameManagerController : ControllerBase
 
         // reconcile account ids with account usernames for display
         List<BetState> bs = new List<BetState>();
-        foreach (Bet b1 in b)
-        {
-            int locationIndex = (int)b1.GameEventId;
-            bs.Add(new BetState {player = a.Where(y => y.Id == b1.AccountId).First().TwitchId, amount = b1.Amount, location = c[locationIndex-1].ToLower()});
-        }
+        // foreach (Bet b1 in b)
+        // {
+        //     int locationIndex = (int)b1.GameEventId;
+        //     bs.Add(new BetState {player = a.Where(y => y.Id == b1.AccountId).First().TwitchId, amount = b1.Amount, location = c[locationIndex-1].ToLower()});
+        // }
 
-        GameUIState mockState = new GameUIState { rolling = false, bets = bs, point = "five" };
+        // GameUIState mockState = new GameUIState { rolling = false, bets = bs, point = "five" };
 
-        return Ok(mockState);
+        //return Ok(mockState);
+        return Ok(null);
     }
 
     [HttpPut("start")]
