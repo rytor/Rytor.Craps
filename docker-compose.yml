@@ -23,7 +23,7 @@ services:
           - "5002:5000"
 
     balance_rytorcraps:
-         # Path to dockerfile.
+        # Path to dockerfile.
         # '.' represents the current directory in which
         # docker-compose.yml is present.
         build: "./Rytor.Craps.Microservices.Balance/Rytor.Craps.Microservices.Balance"
@@ -32,3 +32,14 @@ services:
         
         ports:
           - "5004:5000"
+
+    frontend_rytorcraps:
+        # Path to dockerfile.
+        # '.' represents the current directory in which
+        # docker-compose.yml is present.
+        build: "./rytor-craps-table"
+    
+        # Mapping of container port to host
+        
+        ports:
+          - "3000:3000"
