@@ -9,6 +9,8 @@ RUN dotnet restore
 COPY . ./
 RUN dotnet publish -c Release -o out
 
+RUN export SA_PASSWORD=$SA_PASSWORD
+
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 EXPOSE 5000

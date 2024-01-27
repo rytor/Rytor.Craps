@@ -1,45 +1,38 @@
 version: "3.9"
 services:
-    game_rytorcraps:
-        # Path to dockerfile.
-        # '.' represents the current directory in which
-        # docker-compose.yml is present.
-        build: "./Rytor.Craps.Microservices.Game/Rytor.Craps.Microservices.Game"
-    
-        # Mapping of container port to host
-        
-        ports:
-          - "5006:5000"
-    
-    account_rytorcraps:
-        # Path to dockerfile.
-        # '.' represents the current directory in which
-        # docker-compose.yml is present.
-        build: "./Rytor.Craps.Microservices.Account/Rytor.Craps.Microservices.Account"
-    
-        # Mapping of container port to host
-        
-        ports:
-          - "5002:5000"
+  database_rytorcraps:
+    build: "./db"
+    args:
+      SA_PASSWORD: $SA_PASSWORD
+    ports:
+      - "1433:1433"
+    volumes:
+      - /var/opt/mssql/data
+      - /var/opt/mssql/log
+      - /var/opt/mssql/secrets
 
-    balance_rytorcraps:
-        # Path to dockerfile.
-        # '.' represents the current directory in which
-        # docker-compose.yml is present.
-        build: "./Rytor.Craps.Microservices.Balance/Rytor.Craps.Microservices.Balance"
+  game_rytorcraps:
+    build: "./Rytor.Craps.Microservices.Game/Rytor.Craps.Microservices.Game"
+    args:
+      SA_PASSWORD: $SA_PASSWORD    
+    ports:
+      - "5006:5000"
     
-        # Mapping of container port to host
-        
-        ports:
-          - "5004:5000"
+  account_rytorcraps:
+    build: "./Rytor.Craps.Microservices.Account/Rytor.Craps.Microservices.Account"
+    args:
+      SA_PASSWORD: $SA_PASSWORD
+    ports:
+      - "5002:5000"
 
-    frontend_rytorcraps:
-        # Path to dockerfile.
-        # '.' represents the current directory in which
-        # docker-compose.yml is present.
-        build: "./rytor-craps-table"
-    
-        # Mapping of container port to host
-        
-        ports:
+  balance_rytorcraps:
+    build: "./Rytor.Craps.Microservices.Balance/Rytor.Craps.Microservices.Balance"
+    args:
+      SA_PASSWORD: $SA_PASSWORD
+    ports:
+      - "5004:5000"
+
+  frontend_rytorcraps:
+    build: "./rytor-craps-table"  
+    ports:
           - "3000:3000"
