@@ -15,3 +15,9 @@ EXPOSE 1433
 VOLUME /var/opt/mssql/data
 VOLUME /var/opt/mssql/log
 VOLUME /var/opt/mssql/secrets
+
+# Copy the init.sh file into the container
+COPY init.sh /usr/src/app/init.sh
+
+# Run the init.sh script
+CMD /bin/bash /usr/src/app/init.sh
