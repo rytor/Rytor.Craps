@@ -1,0 +1,26 @@
+On / Off - indicates if the game is in progress or not
+cash on the table if On
+dealer counts cash and hands out chips
+put them on the rack
+place your bet right in front of your
+
+pass line = betting on person throwing the dice. If he wins, we all win
+if he loses we all lose
+
+first roll = 
+    7 or 11 - we all win
+    2, 3, 12 = we all lose
+
+Point numbers (4,5,6,8,9,10) located at the top of the table
+
+if the dice rolls a point number, the on/off marker moves to that position
+
+roll a X before a 7, we all win
+
+render a circle in each cell if ANYONE is there. also render "x N" when more than 1 player is there
+
+if dice roll guid is different from what I have now.. animate the dice and then show the values. I will have the dice roll value at the same time
+
+
+the dice roll threejs stuff is somehow fighting over geometry.. the items added last dont have the right shapes
+i fixed the visual issue by adding the dice before adding the walls. Bug goes away after first click

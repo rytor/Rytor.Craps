@@ -32,7 +32,12 @@ services:
     ports:
       - "5004:5000"
 
-  frontend_rytorcraps:
-    build: "./rytor-craps-table"  
+  ui_rytorcraps:
+    # Path to dockerfile.
+    # '.' represents the current directory in which
+    # docker-compose.yml is present.
+    build: "./rytor-craps-ui"
+    
+    # Mapping of container port to host  
     ports:
-          - "3000:3000"
+      - "80:3000"
