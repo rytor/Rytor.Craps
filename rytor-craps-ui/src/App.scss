@@ -1,0 +1,233 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: rgb(0, 153, 51);
+}
+
+#board {
+  width: 1622px;
+  height: 805px;
+  background: url(/images/craps_table.png);
+  position: relative;
+  float: left;
+}
+
+#active-players {
+  float: right;
+  width: 298px;
+
+  th {
+    text-align: left;
+  }
+  th:nth-child(1) {
+    width: 30%;
+  }
+  th:nth-child(2) {
+    width: 70%;
+  }
+}
+
+#bet-pass {
+  top: 581px;
+  width: 632px;
+  height: 74px;
+  left: 330px;
+}
+
+#bet-field {
+  top: 380px;
+  width: 632px;
+  height: 123px;
+  left: 330px;
+}
+
+#bet-ceeleven {
+  top: 388px;
+  width: 48px;
+  height: 383px;
+  left: 1005px;
+}
+
+#bet-cecraps {
+  top: 388px;
+  width: 48px;
+  height: 383px;
+  left: 1055px;
+}
+
+#bet-eleven {
+  top: 616px;
+  width: 454px;
+  height: 88px;
+  left: 1113px;
+}
+
+#bet-twelve {
+  top: 528px;
+  width: 150px;
+  height: 86px;
+  left: 1417px;
+}
+
+#bet-two {
+  top: 528px;
+  width: 150px;
+  height: 86px;
+  left: 1265px;
+}
+
+#bet-three {
+  top: 528px;
+  width: 150px;
+  height: 86px;
+  left: 1113px;
+}
+
+#bet-hard4 {
+  top: 439px;
+  width: 226px;
+  height: 86px;
+  left: 1341px;
+}
+
+#bet-hard8 {
+  top: 439px;
+  width: 225px;
+  height: 86px;
+  left: 1113px;
+}
+
+#bet-hard10 {
+  top: 351px;
+  width: 226px;
+  height: 86px;
+  left: 1341px;
+}
+
+#bet-big8{
+  top: 505px;
+  width: 122px;
+  height: 74px;
+  left: 206px;
+}
+
+#bet-big6 {
+  top: 379px;
+  width: 75px;
+  height: 124px;
+  left: 128px;
+}
+
+#bet-hard6 {
+  top: 351px;
+  width: 225px;
+  height: 86px;
+  left: 1113px;
+}
+
+#bet-seven {
+  top: 302px;
+  width: 454px;
+  height: 47px;
+  left: 1113px;
+}
+
+#active-players {
+  float: right;
+  width: 298px;
+}
+
+.absolute {
+  position: absolute;
+  // background: rgb(255, 255, 255, .5);
+  // border: 2px solid red;
+}
+
+#bet-any {
+  top: 706px;
+  width: 454px;
+  height: 49px;
+  left: 1113px;
+}
+
+#bet-dontpass {
+  top: 505px;
+  width: 632px;
+  height: 74px;
+  left: 330px;
+}
+
+#bet-dontcome {
+  top: 50px;
+  width: 123px;
+  height: 201px;
+  left: 205px;
+}
+
+#bet-come {
+  top: 253px;
+  width: 757px;
+  height: 124px;
+  left: 205px;
+}
+
+#bet-four {
+  top: 50px;
+  width: 126px;
+  height: 201px;
+  left: 330px;
+}
+
+#bet-five {
+  top: 50px;
+  width: 126px;
+  height: 201px;
+  left: 456px;
+}
+
+#bet-six {
+  top: 50px;
+  width: 126px;
+  height: 201px;
+  left: 582px;
+}
+
+#bet-eight {
+  top: 50px;
+  width: 126px;
+  height: 201px;
+  left: 710px;
+}
+
+#bet-nine {
+  top: 50px;
+  width: 126px;
+  height: 201px;
+  left: 836px;
+}
+
+#bet-ten {
+  top: 50px;
+  width: 126px;
+  height: 201px;
+  left: 962px;
+}
+
+.chip {
+  background: red;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  padding: 10px;
+  text-align: center;
+}
+
+.point-dot-i-really-need-scoped-css {
+  background: grey;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  padding: 10px;  
+}
