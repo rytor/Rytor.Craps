@@ -1,5 +1,10 @@
 version: "3.9"
 services:
+    db_rytorcraps:
+      build: "./db"
+      ports:
+       - "5432:5432"
+
     game_rytorcraps:
         # Path to dockerfile.
         # '.' represents the current directory in which

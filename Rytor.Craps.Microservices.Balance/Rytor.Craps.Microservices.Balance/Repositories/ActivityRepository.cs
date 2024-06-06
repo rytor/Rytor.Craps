@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Npgsql;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Dapper;
@@ -31,7 +31,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Activity");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Activity>(sql);
                 }
@@ -54,7 +54,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Activity for Account {accountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Activity>(sql, new { AccountId = accountId });
                 }
@@ -77,7 +77,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Getting Activity {id}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Activity>(sql, new { Id = id }).First();
                 }
@@ -102,7 +102,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Creating Activity for Account {activity.AccountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     newId = connection.Query<int>(sql, new { AccountId = activity.AccountId, ActivityTypeId = activity.ActivityTypeId, Amount = activity.Amount }).Single();
                 }
@@ -127,7 +127,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Updating Activity {activity.Id} to AccountId {activity.AccountId}, ActivityTypeId {activity.ActivityTypeId}, Amount {activity.Amount}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { Id = activity.Id, AccountId = activity.AccountId, ActivityTypeId = activity.ActivityTypeId, Amount = activity.Amount });
                 }
@@ -149,7 +149,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Deleting Activity {activityId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { Id = activityId });
                 }

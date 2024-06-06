@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Dapper;
 using Rytor.Craps.Microservices.Game.Models;
-using System.Data.SqlClient;
+using Npgsql;
 using System;
 using System.Linq;
 
@@ -30,7 +30,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all GameEventPayouts");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.GameEventPayout>(sql);
                 }
@@ -53,7 +53,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Bets");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Bet>(sql);
                 }
@@ -76,7 +76,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Getting Bet {id}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Bet>(sql, new { Id = id }).First();
                 }
@@ -99,7 +99,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Bets for Status {status}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Bet>(sql, new { Status = status });
                 }
@@ -122,7 +122,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Bets for Account {accountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Bet>(sql, new { AccountId = accountId });
                 }
@@ -147,7 +147,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Creating Bet for Account {bet.AccountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     newId = connection.Query<int>(sql, new { AccountId = bet.AccountId, GameEventId = bet.GameEventId, Amount = bet.Amount, BetStatusId = bet.BetStatusId, Payout = bet.Payout }).Single();
                 }
@@ -174,7 +174,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Updating Bet {bet.Id} to AccountId {bet.AccountId}, GameEventId {bet.GameEventId}, Amount {bet.Amount}, BetStatusId {bet.BetStatusId}, Payout {bet.Payout}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { Id = bet.Id, AccountId = bet.AccountId, GameEventId = bet.GameEventId, Amount = bet.Amount, BetStatusId = bet.BetStatusId, Payout = bet.Payout });
                 }
@@ -196,7 +196,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Deleting Bet {betId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { Id = betId });
                 }

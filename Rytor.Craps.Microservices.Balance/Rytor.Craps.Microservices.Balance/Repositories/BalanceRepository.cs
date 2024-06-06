@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Npgsql;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Dapper;
@@ -30,7 +30,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Creating Balance for Account {balance.AccountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Query(sql, new { AccountId = balance.AccountId, CurrentBalance = balance.CurrentBalance, CurrentFloor = balance.CurrentFloor });
                 }
@@ -52,7 +52,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Deleting Balance for Account {accountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { AccountId = accountId });
                 }
@@ -75,7 +75,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Getting Balance for Account {accountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Balance>(sql, new { AccountId = accountId }).First();
                 }
@@ -98,7 +98,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Balances");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Balance>(sql);
                 }
@@ -122,7 +122,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Updating Balance for Account {balance.AccountId} to {balance.CurrentBalance}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { AccountId = balance.AccountId, CurrentBalance = balance.CurrentBalance, CurrentFloor = balance.CurrentFloor });
                 }
