@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Npgsql;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Dapper;
@@ -31,7 +31,7 @@ namespace Rytor.Craps.Microservices.Account.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Accounts");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Account>(sql);
                 }
@@ -54,7 +54,7 @@ namespace Rytor.Craps.Microservices.Account.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Getting Account {id}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Account>(sql).First();
                 }
@@ -79,7 +79,7 @@ namespace Rytor.Craps.Microservices.Account.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Creating Account {account.TwitchId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     newId = connection.Query<int>(sql, new { twitchId = account.TwitchId }).Single();
                 }
@@ -102,7 +102,7 @@ namespace Rytor.Craps.Microservices.Account.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Updating Account {account.Id} to {account.TwitchId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { id = account.Id, twitchId = account.TwitchId });
                 }
@@ -124,7 +124,7 @@ namespace Rytor.Craps.Microservices.Account.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Deleting Account {id}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { deleteId = id });
                 }
