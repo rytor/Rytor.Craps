@@ -4,6 +4,9 @@ services:
       build: "./db"
       ports:
        - "5432:5432"
+      environment:
+       - POSTGRES_PASSWORD=rytor_crap$
+       - POSTGRES_USER=post
 
     game_rytorcraps:
         # Path to dockerfile.
