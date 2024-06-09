@@ -24,7 +24,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
 
         public int CreateBalance(Models.Balance balance)
         {
-            string sql = $@"INSERT INTO dbo.Balance (AccountId, CurrentBalance, CurrentFloor) 
+            string sql = $@"INSERT INTO Balance (AccountId, CurrentBalance, CurrentFloor) 
                             VALUES (@AccountId, @CurrentBalance, @CurrentFloor)";
 
             try
@@ -46,7 +46,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
 
         public bool DeleteBalance(int accountId)
         {
-            string sql = $@"DELETE FROM dbo.Balance
+            string sql = $@"DELETE FROM Balance
                             WHERE AccountId = @AccountId";
 
             try
@@ -70,7 +70,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             Models.Balance result;
 
-            string sql = $@"SELECT AccountId, CurrentBalance, CurrentFloor, CreateDate from dbo.Balance WHERE AccountId = @AccountId";
+            string sql = $@"SELECT AccountId, CurrentBalance, CurrentFloor, CreateDate from Balance WHERE AccountId = @AccountId";
 
             try
             {
@@ -93,7 +93,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             IEnumerable<Models.Balance> result;
 
-            string sql = $@"SELECT AccountId, CurrentBalance, CurrentFloor, CreateDate from dbo.Balance";
+            string sql = $@"SELECT AccountId, CurrentBalance, CurrentFloor, CreateDate from Balance";
 
             try
             {
@@ -114,7 +114,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
 
         public Models.Balance UpdateBalance(Models.Balance balance)
         {
-            string sql = $@"UPDATE dbo.Balance
+            string sql = $@"UPDATE Balance
                             SET CurrentBalance = @CurrentBalance,
                             CurrentFloor = @CurrentFloor
                             WHERE AccountId = @AccountId";

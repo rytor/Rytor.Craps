@@ -26,7 +26,7 @@ namespace Rytor.Craps.Microservices.Account.Repositories
         {
             IEnumerable<Models.Account> result;
 
-            string sql = $@"SELECT Id, TwitchId, CreateDate from dbo.Account";
+            string sql = $@"SELECT Id, TwitchId, CreateDate from Account";
 
             try
             {
@@ -49,7 +49,7 @@ namespace Rytor.Craps.Microservices.Account.Repositories
         {
             Models.Account result;
 
-            string sql = $@"SELECT Id, TwitchId, CreateDate from dbo.Account WHERE Id = {id}";
+            string sql = $@"SELECT Id, TwitchId, CreateDate from Account WHERE Id = {id}";
 
             try
             {
@@ -72,7 +72,7 @@ namespace Rytor.Craps.Microservices.Account.Repositories
         {
             int newId;
 
-            string sql = $@"INSERT INTO dbo.Account (@twitchId) 
+            string sql = $@"INSERT INTO Account (@twitchId) 
                             VALUES (@TwitchId)
                             SELECT CAST(SCOPE_IDENTITY() as int)";
 
@@ -95,7 +95,7 @@ namespace Rytor.Craps.Microservices.Account.Repositories
 
         public Models.Account UpdateAccount(Models.Account account)
         {
-            string sql = $@"UPDATE dbo.Account
+            string sql = $@"UPDATE Account
                             SET TwitchId = @twitchId
                             WHERE Id = @id";
             
@@ -118,7 +118,7 @@ namespace Rytor.Craps.Microservices.Account.Repositories
 
         public bool DeleteAccount(int id)
         {
-            string sql = $@"DELETE FROM dbo.Account
+            string sql = $@"DELETE FROM Account
                             WHERE Id = @deleteId";
             
             try

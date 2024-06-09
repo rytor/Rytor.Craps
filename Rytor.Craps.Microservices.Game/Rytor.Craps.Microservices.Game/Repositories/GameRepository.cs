@@ -25,7 +25,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             IEnumerable<Models.GameEventPayout> result;
 
-            string sql = $@"SELECT GameEventId, PayoutOddsLeft, PayoutOddsRight from dbo.GameEventPayout";
+            string sql = $@"SELECT GameEventId, PayoutOddsLeft, PayoutOddsRight from GameEventPayout";
 
             try
             {
@@ -48,7 +48,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             IEnumerable<Models.Bet> result;
 
-            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from dbo.Bet ORDER BY CreateDate ASC";
+            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from Bet ORDER BY CreateDate ASC";
 
             try
             {
@@ -71,7 +71,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             Models.Bet result;
 
-            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from dbo.Bet WHERE Id = @Id";
+            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from Bet WHERE Id = @Id";
 
             try
             {
@@ -94,7 +94,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             IEnumerable<Models.Bet> result;
 
-            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from dbo.Bet WHERE BetStatusId = @Status ORDER BY CreateDate ASC";
+            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from Bet WHERE BetStatusId = @Status ORDER BY CreateDate ASC";
 
             try
             {
@@ -117,7 +117,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             IEnumerable<Models.Bet> result;
 
-            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from dbo.Bet WHERE AccountId = @AccountId ORDER BY CreateDate ASC";
+            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from Bet WHERE AccountId = @AccountId ORDER BY CreateDate ASC";
 
             try
             {
@@ -140,7 +140,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             int newId;
 
-            string sql = $@"INSERT INTO dbo.Bet (AccountId, GameEventId, Amount, BetStatusId, Payout) 
+            string sql = $@"INSERT INTO Bet (AccountId, GameEventId, Amount, BetStatusId, Payout) 
                             VALUES (@AccountId, @GameEventId, @Amount, @BetStatusId, @Payout)
                             SELECT CAST(SCOPE_IDENTITY() as int)";
 
@@ -163,7 +163,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
 
         public Bet UpdateBet(Bet bet)
         {
-            string sql = $@"UPDATE dbo.Bet
+            string sql = $@"UPDATE Bet
                             SET AccountId = @AccountId,
                             GameEventId = @GameEventId,
                             Amount = @Amount,
@@ -190,7 +190,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
 
         public bool DeleteBet(int betId)
         {
-            string sql = $@"DELETE FROM dbo.Bet
+            string sql = $@"DELETE FROM Bet
                             WHERE Id = @Id";
 
             try

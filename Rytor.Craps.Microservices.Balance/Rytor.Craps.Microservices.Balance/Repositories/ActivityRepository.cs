@@ -26,7 +26,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             IEnumerable<Models.Activity> result;
 
-            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from dbo.Activity";
+            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from Activity";
 
             try
             {
@@ -49,7 +49,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             IEnumerable<Models.Activity> result;
 
-            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from dbo.Activity WHERE AccountId = @AccountId ORDER BY CreateDate ASC";
+            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from Activity WHERE AccountId = @AccountId ORDER BY CreateDate ASC";
 
             try
             {
@@ -72,7 +72,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             Models.Activity result;
 
-            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from dbo.Activity WHERE Id = @Id";
+            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from Activity WHERE Id = @Id";
 
             try
             {
@@ -95,7 +95,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             int newId;
 
-            string sql = $@"INSERT INTO dbo.Activity (AccountId, ActivityTypeId, Amount) 
+            string sql = $@"INSERT INTO Activity (AccountId, ActivityTypeId, Amount) 
                             VALUES (@AccountId, @ActivityTypeId, @Amount)
                             SELECT CAST(SCOPE_IDENTITY() as int)";
 
@@ -118,7 +118,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
 
         public Models.Activity UpdateActivity(Models.Activity activity)
         {
-            string sql = $@"UPDATE dbo.Activity
+            string sql = $@"UPDATE Activity
                             SET AccountId = @AccountId,
                             ActivityTypeId = @ActivityTypeId,
                             Amount = @Amount
@@ -143,7 +143,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
 
         public bool DeleteActivity(int activityId)
         {
-            string sql = $@"DELETE FROM dbo.Activity
+            string sql = $@"DELETE FROM Activity
                             WHERE Id = @Id";
 
             try
