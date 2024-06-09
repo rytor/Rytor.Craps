@@ -18,6 +18,11 @@ services:
         
         ports:
           - "5006:5000"
+        environment:
+          - DB_HOST=db_rytorcraps
+          - DB_PORT=5432
+          - DB_USER=post
+          - DB_PASSWORD=rytor_crap$
     
     account_rytorcraps:
         # Path to dockerfile.
@@ -29,6 +34,11 @@ services:
         
         ports:
           - "5002:5000"
+        environment:
+          - DB_HOST=db_rytorcraps
+          - DB_PORT=5432
+          - DB_USER=post
+          - DB_PASSWORD=rytor_crap$
 
     balance_rytorcraps:
         # Path to dockerfile.
@@ -40,6 +50,11 @@ services:
         
         ports:
           - "5004:5000"
+        environment:
+          - DB_HOST=db_rytorcraps
+          - DB_PORT=5432
+          - DB_USER=post
+          - DB_PASSWORD=rytor_crap$
 
     #ui_rytorcraps:
       # Path to dockerfile.
