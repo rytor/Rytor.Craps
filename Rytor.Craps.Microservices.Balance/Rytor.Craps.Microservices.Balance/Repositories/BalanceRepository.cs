@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Npgsql;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Dapper;
@@ -24,13 +24,13 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
 
         public int CreateBalance(Models.Balance balance)
         {
-            string sql = $@"INSERT INTO dbo.Balance (AccountId, CurrentBalance, CurrentFloor) 
+            string sql = $@"INSERT INTO Balance (AccountId, CurrentBalance, CurrentFloor) 
                             VALUES (@AccountId, @CurrentBalance, @CurrentFloor)";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Creating Balance for Account {balance.AccountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Query(sql, new { AccountId = balance.AccountId, CurrentBalance = balance.CurrentBalance, CurrentFloor = balance.CurrentFloor });
                 }
@@ -46,13 +46,13 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
 
         public bool DeleteBalance(int accountId)
         {
-            string sql = $@"DELETE FROM dbo.Balance
+            string sql = $@"DELETE FROM Balance
                             WHERE AccountId = @AccountId";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Deleting Balance for Account {accountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { AccountId = accountId });
                 }
@@ -70,12 +70,12 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             Models.Balance result;
 
-            string sql = $@"SELECT AccountId, CurrentBalance, CurrentFloor, CreateDate from dbo.Balance WHERE AccountId = @AccountId";
+            string sql = $@"SELECT AccountId, CurrentBalance, CurrentFloor, CreateDate from Balance WHERE AccountId = @AccountId";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Getting Balance for Account {accountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Balance>(sql, new { AccountId = accountId }).First();
                 }
@@ -93,12 +93,12 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             IEnumerable<Models.Balance> result;
 
-            string sql = $@"SELECT AccountId, CurrentBalance, CurrentFloor, CreateDate from dbo.Balance";
+            string sql = $@"SELECT AccountId, CurrentBalance, CurrentFloor, CreateDate from Balance";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Balances");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Balance>(sql);
                 }
@@ -114,7 +114,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
 
         public Models.Balance UpdateBalance(Models.Balance balance)
         {
-            string sql = $@"UPDATE dbo.Balance
+            string sql = $@"UPDATE Balance
                             SET CurrentBalance = @CurrentBalance,
                             CurrentFloor = @CurrentFloor
                             WHERE AccountId = @AccountId";
@@ -122,7 +122,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Updating Balance for Account {balance.AccountId} to {balance.CurrentBalance}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { AccountId = balance.AccountId, CurrentBalance = balance.CurrentBalance, CurrentFloor = balance.CurrentFloor });
                 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Dapper;
 using Rytor.Craps.Microservices.Game.Models;
-using System.Data.SqlClient;
+using Npgsql;
 using System;
 using System.Linq;
 
@@ -25,12 +25,12 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             IEnumerable<Models.GameEventPayout> result;
 
-            string sql = $@"SELECT GameEventId, PayoutOddsLeft, PayoutOddsRight from dbo.GameEventPayout";
+            string sql = $@"SELECT GameEventId, PayoutOddsLeft, PayoutOddsRight from GameEventPayout";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all GameEventPayouts");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.GameEventPayout>(sql);
                 }
@@ -48,12 +48,12 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             IEnumerable<Models.Bet> result;
 
-            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from dbo.Bet ORDER BY CreateDate ASC";
+            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from Bet ORDER BY CreateDate ASC";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Bets");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Bet>(sql);
                 }
@@ -71,12 +71,12 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             Models.Bet result;
 
-            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from dbo.Bet WHERE Id = @Id";
+            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from Bet WHERE Id = @Id";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Getting Bet {id}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Bet>(sql, new { Id = id }).First();
                 }
@@ -94,12 +94,12 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             IEnumerable<Models.Bet> result;
 
-            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from dbo.Bet WHERE BetStatusId = @Status ORDER BY CreateDate ASC";
+            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from Bet WHERE BetStatusId = @Status ORDER BY CreateDate ASC";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Bets for Status {status}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Bet>(sql, new { Status = status });
                 }
@@ -117,12 +117,12 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             IEnumerable<Models.Bet> result;
 
-            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from dbo.Bet WHERE AccountId = @AccountId ORDER BY CreateDate ASC";
+            string sql = $@"SELECT Id, AccountId, GameEventId, Amount, BetStatusId, Payout, CreateDate from Bet WHERE AccountId = @AccountId ORDER BY CreateDate ASC";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Bets for Account {accountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Bet>(sql, new { AccountId = accountId });
                 }
@@ -140,14 +140,14 @@ namespace Rytor.Craps.Microservices.Game.Repositories
         {
             int newId;
 
-            string sql = $@"INSERT INTO dbo.Bet (AccountId, GameEventId, Amount, BetStatusId, Payout) 
+            string sql = $@"INSERT INTO Bet (AccountId, GameEventId, Amount, BetStatusId, Payout) 
                             VALUES (@AccountId, @GameEventId, @Amount, @BetStatusId, @Payout)
                             SELECT CAST(SCOPE_IDENTITY() as int)";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Creating Bet for Account {bet.AccountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     newId = connection.Query<int>(sql, new { AccountId = bet.AccountId, GameEventId = bet.GameEventId, Amount = bet.Amount, BetStatusId = bet.BetStatusId, Payout = bet.Payout }).Single();
                 }
@@ -163,7 +163,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
 
         public Bet UpdateBet(Bet bet)
         {
-            string sql = $@"UPDATE dbo.Bet
+            string sql = $@"UPDATE Bet
                             SET AccountId = @AccountId,
                             GameEventId = @GameEventId,
                             Amount = @Amount,
@@ -174,7 +174,7 @@ namespace Rytor.Craps.Microservices.Game.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Updating Bet {bet.Id} to AccountId {bet.AccountId}, GameEventId {bet.GameEventId}, Amount {bet.Amount}, BetStatusId {bet.BetStatusId}, Payout {bet.Payout}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { Id = bet.Id, AccountId = bet.AccountId, GameEventId = bet.GameEventId, Amount = bet.Amount, BetStatusId = bet.BetStatusId, Payout = bet.Payout });
                 }
@@ -190,13 +190,13 @@ namespace Rytor.Craps.Microservices.Game.Repositories
 
         public bool DeleteBet(int betId)
         {
-            string sql = $@"DELETE FROM dbo.Bet
+            string sql = $@"DELETE FROM Bet
                             WHERE Id = @Id";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Deleting Bet {betId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { Id = betId });
                 }

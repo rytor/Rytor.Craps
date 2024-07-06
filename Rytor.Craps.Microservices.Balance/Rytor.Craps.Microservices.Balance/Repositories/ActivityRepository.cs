@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Npgsql;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Dapper;
@@ -26,12 +26,12 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             IEnumerable<Models.Activity> result;
 
-            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from dbo.Activity";
+            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from Activity";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Activity");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Activity>(sql);
                 }
@@ -49,12 +49,12 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             IEnumerable<Models.Activity> result;
 
-            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from dbo.Activity WHERE AccountId = @AccountId ORDER BY CreateDate ASC";
+            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from Activity WHERE AccountId = @AccountId ORDER BY CreateDate ASC";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Getting all Activity for Account {accountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Activity>(sql, new { AccountId = accountId });
                 }
@@ -72,12 +72,12 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             Models.Activity result;
 
-            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from dbo.Activity WHERE Id = @Id";
+            string sql = $@"SELECT Id, AccountId, ActivityTypeId, Amount, CreateDate from Activity WHERE Id = @Id";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Getting Activity {id}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     result = connection.Query<Models.Activity>(sql, new { Id = id }).First();
                 }
@@ -95,14 +95,14 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
         {
             int newId;
 
-            string sql = $@"INSERT INTO dbo.Activity (AccountId, ActivityTypeId, Amount) 
+            string sql = $@"INSERT INTO Activity (AccountId, ActivityTypeId, Amount) 
                             VALUES (@AccountId, @ActivityTypeId, @Amount)
                             SELECT CAST(SCOPE_IDENTITY() as int)";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Creating Activity for Account {activity.AccountId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     newId = connection.Query<int>(sql, new { AccountId = activity.AccountId, ActivityTypeId = activity.ActivityTypeId, Amount = activity.Amount }).Single();
                 }
@@ -118,7 +118,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
 
         public Models.Activity UpdateActivity(Models.Activity activity)
         {
-            string sql = $@"UPDATE dbo.Activity
+            string sql = $@"UPDATE Activity
                             SET AccountId = @AccountId,
                             ActivityTypeId = @ActivityTypeId,
                             Amount = @Amount
@@ -127,7 +127,7 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
             try
             {
                 _logger.LogDebug($@"{_className}: Updating Activity {activity.Id} to AccountId {activity.AccountId}, ActivityTypeId {activity.ActivityTypeId}, Amount {activity.Amount}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { Id = activity.Id, AccountId = activity.AccountId, ActivityTypeId = activity.ActivityTypeId, Amount = activity.Amount });
                 }
@@ -143,13 +143,13 @@ namespace Rytor.Craps.Microservices.Balance.Repositories
 
         public bool DeleteActivity(int activityId)
         {
-            string sql = $@"DELETE FROM dbo.Activity
+            string sql = $@"DELETE FROM Activity
                             WHERE Id = @Id";
 
             try
             {
                 _logger.LogDebug($@"{_className}: Deleting Activity {activityId}");
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new NpgsqlConnection(_connectionString))
                 {
                     connection.Execute(sql, new { Id = activityId });
                 }

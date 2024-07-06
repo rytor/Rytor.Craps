@@ -1,5 +1,13 @@
 version: "3.9"
 services:
+    db_rytorcraps:
+      build: "./db"
+      ports:
+       - "5432:5432"
+      environment:
+       - POSTGRES_PASSWORD=rytor_crap$
+       - POSTGRES_USER=post
+
     game_rytorcraps:
         # Path to dockerfile.
         # '.' represents the current directory in which
@@ -10,6 +18,11 @@ services:
         
         ports:
           - "5006:5000"
+        environment:
+          - DB_HOST=db_rytorcraps
+          - DB_PORT=5432
+          - DB_USER=post
+          - DB_PASSWORD=rytor_crap$
     
     account_rytorcraps:
         # Path to dockerfile.
@@ -21,6 +34,11 @@ services:
         
         ports:
           - "5002:5000"
+        environment:
+          - DB_HOST=db_rytorcraps
+          - DB_PORT=5432
+          - DB_USER=post
+          - DB_PASSWORD=rytor_crap$
 
     balance_rytorcraps:
         # Path to dockerfile.
@@ -32,14 +50,19 @@ services:
         
         ports:
           - "5004:5000"
+        environment:
+          - DB_HOST=db_rytorcraps
+          - DB_PORT=5432
+          - DB_USER=post
+          - DB_PASSWORD=rytor_crap$
 
-    ui_rytorcraps:
+    #ui_rytorcraps:
       # Path to dockerfile.
       # '.' represents the current directory in which
       # docker-compose.yml is present.
-      build: "./rytor-craps-ui"
+      #build: "./rytor-craps-ui"
     
       # Mapping of container port to host
       
-      ports:
-        - "80:3000"
+      #ports:
+      #  - "80:3000"

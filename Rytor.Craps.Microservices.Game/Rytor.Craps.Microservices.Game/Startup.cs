@@ -27,7 +27,14 @@ namespace Rytor.Craps.Microservices.Game
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IGameRepository>(x => new GameRepository(Configuration["Database:ConnectionString"], x.GetService<ILoggerFactory>()));
+            string dbHost = System.Environment.GetEnvironmentVariable("DB_HOST");
+            string dbPort = System.Environment.GetEnvironmentVariable("DB_PORT");
+            string dbUser = System.Environment.GetEnvironmentVariable("DB_USER");
+            string dbPassword = System.Environment.GetEnvironmentVariable("DB_PASSWORD");
+            string dbName = "game";
+            string connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};User ID={dbUser};Password={dbPassword}";
+
+            services.AddSingleton<IGameRepository>(x => new GameRepository(connectionString, x.GetService<ILoggerFactory>()));
             services.AddSingleton<IGameService, GameService>();
             services.AddSingleton<IBetService, BetService>();
             services.AddControllers().AddNewtonsoftJson();
