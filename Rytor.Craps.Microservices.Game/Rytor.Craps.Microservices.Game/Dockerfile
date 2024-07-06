@@ -1,6 +1,11 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 
+ENV DB_HOST=db_rytorcraps
+ENV DB_PORT=5432
+ENV DB_USER=placeholder
+ENV DB_PASSWORD=placeholder
+
 # Copy csproj and restore as distinct layers
 COPY *.csproj ./
 RUN dotnet restore
