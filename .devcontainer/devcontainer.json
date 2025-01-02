@@ -7,15 +7,19 @@
       "ghcr.io/devcontainers/features/git:1": {},
       "ghcr.io/devcontainers/features/docker-in-docker:2": {},
       "ghcr.io/devcontainers-contrib/features/vscode-cli:1": {},
-      "ghcr.io/devcontainers/features/node:1": {}
+      "ghcr.io/devcontainers/features/node:1": {},
+      "ghcr.io/duduribeiro/devcontainer-features/tmux:1": {},
+      "ghcr.io/devcontainers-extra/features/neovim-apt-get:1": {}
     }, 
     "customizations": {
       "vscode": {
         "extensions": ["ms-dotnettools.csdevkit",
                         "ms-azuretools.vscode-docker",
-                        "eamodio.gitlens",
                         "ms-vscode-remote.remote-containers",
-                        "dbaeumer.vscode-eslint"]
+                        "dbaeumer.vscode-eslint",
+                        "GitHub.copilot",
+                        "vscode-icons-team.vscode-icons",
+                        "ckolkman.vscode-postgres"]
       }
     },
     "forwardPorts": [3000, 5000, 5001, 5002, 5003, 5004, 5005, 5006, 5007, 5008, 5009]
