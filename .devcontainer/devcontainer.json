@@ -1,15 +1,11 @@
 {
-    "image": "ubuntu:22.04",
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
     "features": {
       "ghcr.io/devcontainers/features/dotnet:2": {
         "version": "8.0"
       },
-      "ghcr.io/devcontainers/features/git:1": {},
       "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-      "ghcr.io/devcontainers-contrib/features/vscode-cli:1": {},
-      "ghcr.io/devcontainers/features/node:1": {},
-      "ghcr.io/duduribeiro/devcontainer-features/tmux:1": {},
-      "ghcr.io/devcontainers-extra/features/neovim-apt-get:1": {}
+      "ghcr.io/devcontainers/features/node:1": {}
     }, 
     "customizations": {
       "vscode": {
